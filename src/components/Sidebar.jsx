@@ -34,6 +34,7 @@ function Sidebar() {
     <Box sx={{ alignSelf: 'center',paddingY: 2}}>
       <img src={logo} />
     </Box>
+    <p>TechBPIT</p>
       <Divider />
       <List>
         <ListItem key='Groups' disablePadding>
