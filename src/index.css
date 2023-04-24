@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+a.active {
+  background: hsl(224, 98%, 58%);
+  color: white;
+}
+
+a.pending {
+  color: hsl(224, 98%, 58%);
+}

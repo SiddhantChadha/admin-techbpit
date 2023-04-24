@@ -7,13 +7,29 @@ import {
 
 import './index.css';
 import App from './App';
-import Sidebar from './components/Sidebar';
+import Groups from './routes/Groups'
+import Posts from './routes/Posts'
+import Users from './routes/Users'
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Sidebar />,
+    element: <App /> ,
+    children: [
+      {
+        path: "groups",
+        element: <Groups /> ,
+      },
+      {
+        path: "posts",
+        element: <Posts /> ,
+      },
+      {
+        path: "users",
+        element: <Users /> ,
+      },
+    ],
   },
 ]);
 
