@@ -1,7 +1,8 @@
 import React from "react";
+import UserCard from "../components/UserCard";
 
 function Users() {
-  return <div>Users</div>;
+  return <UserCard />;
 }
 
 export default Users;
