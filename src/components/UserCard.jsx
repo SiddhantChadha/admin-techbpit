@@ -2,7 +2,7 @@ import React from "react";
 
 function UserCard() {
   return (
-    <div className="hover:bg-red-50 flex shadow-md bg-white items-center">
+    <div className="hover:bg-red-50 flex shadow-md bg-white items-center w-full ">
       <div className="flex gap-3 px-6 py-4 font-normal text-gray-900">
         <div className="relative h-10 w-10">
           <img

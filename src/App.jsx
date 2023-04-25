@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="min-h-screen max-h-screen flex flex-auto flex-shrink-0 antialiased bg-gray-100">
+    <div className="min-h-screen max-h-screen flex flex-auto flex-shrink-0 antialiased bg-gray-50">
       <Sidebar />
-      <div id="detail" className="overflow-y-scroll">
+      <div id="detail" className="overflow-y-scroll w-full">
         <Outlet />
       </div>
     </div>
