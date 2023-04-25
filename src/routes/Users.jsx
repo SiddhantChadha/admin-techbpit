@@ -1,8 +1,12 @@
 import React from "react";
-import UserCard from "../components/UserCard";
+import UserTable from "../components/UserTable";
 
 function Users() {
-  return <UserCard />;
+  return (
+    <div className="flex justify-center items-center">
+      <UserTable />
+    </div>
+  );
 }
 
 export default Users;
