@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div style={{display:"flex"}}>
+    <div className="min-h-screen flex flex-auto flex-shrink-0 antialiased bg-gray-50">
       <Sidebar />
       <div id="detail">
         <Outlet />
