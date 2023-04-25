@@ -9,7 +9,7 @@ function App() {
       <div id="detail">
         <Outlet />
       </div>
-      </div>
+    </div>
   );
 }
 
