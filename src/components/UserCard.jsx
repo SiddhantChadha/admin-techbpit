@@ -1,19 +1,19 @@
 import React from "react";
 
-function UserCard() {
+function UserCard(props) {
+  const itemData = props.itemData;
   return (
     <div className="hover:bg-red-50 flex shadow-md bg-white items-center w-full ">
       <div className="flex gap-3 px-6 py-4 font-normal text-gray-900">
         <div className="relative h-10 w-10">
           <img
             className="h-full w-full rounded-full object-cover object-center"
-            src="https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
-            alt=""
+            src={itemData.image}
           />
         </div>
         <div className="text-sm">
-          <div className="font-medium text-gray-700">Tushar Jain</div>
-          <div className="text-gray-400">tjain210@gmail.com</div>
+          <div className="font-medium text-gray-700">{itemData.username}</div>
+          <div className="text-gray-400">{itemData.email}</div>
         </div>
       </div>
       <div className="px-6 py-4">

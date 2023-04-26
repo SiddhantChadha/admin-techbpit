@@ -1,24 +1,29 @@
 import React from "react";
 
-function ResourceItem() {
+function ResourceItem(props) {
+  const itemData = props.itemData;
   return (
     <div className="my-12 bg-white mx-4  rounded-xl shadow-md w-5/12">
       <div className="p-6">
         <div className="flex items-center justify-between ">
           <img
             className="h-12 w-12 rounded-full object-cover object-center"
-            src="https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png"
+            src={itemData.groupId.image}
           />
           <div className="mx-4">
             <div className="font-semibold text-base leading-tight">
               <div>
-                A new <span className="font-bold">resources</span> was added to
+                New <span className="font-bold">resources</span> was added to
                 the
-                <span className="font-bold"> NODE JS</span> community
+                <span className="font-bold">
+                  {" "}
+                  {itemData.groupId.groupName}
+                </span>{" "}
+                community
               </div>
               <div>
                 <span className="text-xss text-gray-400 leading-none">
-                  15 mins read
+                  {itemData.resourceTime}
                 </span>
               </div>
             </div>
