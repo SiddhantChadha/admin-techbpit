@@ -3,6 +3,8 @@ import CommunityPost from "../components/CommunityPost";
 import EventPost from "../components/EventPost";
 import ResourcePost from "../components/ResourcePost";
 import PostsSearchBar from "../components/PostsSearchBar";
+import DropDown from "../components/DropDown";
+import PaginationBar from "../components/PaginationBar";
 
 const DATA = [
   {
@@ -259,9 +261,13 @@ const DATA = [
 
 function Posts() {
   return (
-    <div className="flex flex-col items-center">
-      <PostsSearchBar />
-      <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center max-h-screen">
+      {/* <DropDown options={["ritik", "siddhant", "tushar"]} title={"Party Animals"} /> */}
+      <PaginationBar />
+      <div
+        className="flex flex-col items-center overflow-y-auto"
+        id="journal-scroll"
+      >
         {DATA.map((item) => getPostType(item))}
       </div>
     </div>
