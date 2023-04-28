@@ -2,7 +2,9 @@ import { act } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 
 export default function PaginationBar(props) {
-  const [activePage, setActivePage] = useState(1);
+  const [activeOffset, setActiveOffset] = useState(1);
+  const [pageStartPoint,setPageStartPoint] = useState(1);
+
   return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full ">
       <div className="flex flex-1 justify-between sm:hidden">
@@ -27,7 +29,7 @@ export default function PaginationBar(props) {
             aria-label="Pagination"
           >
             <span
-              onClick={() => setActivePage(activePage - 1)}
+              onClick={() => setActiveOffset(activeOffset - 1)}
               className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Previous</span>
@@ -46,10 +48,10 @@ export default function PaginationBar(props) {
                 />
               </svg>
             </span>
-            {setupPages(activePage)}
+            {setupPages(activeOffset,pageStartPoint,setPageStartPoint,setActiveOffset)}
             <span
               className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-              onClick={() => setActivePage(activePage + 1)}
+              onClick={() => setActiveOffset(activeOffset + 1)}
             >
               <span className="sr-only">Next</span>
               <svg
@@ -74,15 +76,20 @@ export default function PaginationBar(props) {
   );
 }
 
-function setupPages(activePage) {
-  let startPage;
-  var items = [];
-  if (activePage % 7 != 0) {
-    startPage = activePage;
-  } else {
+function setupPages(activeOffset,pageStartPoint,setPageStartPoint,setActiveOffset) {
+  
+  let items=[];
+
+  if(activeOffset%8==0 &&activeOffset!=0){
+    setActiveOffset(1);
+    setPageStartPoint(pageStartPoint+7);
+  }else if(activeOffset==0){
+    setActiveOffset(7);
+    setPageStartPoint(pageStartPoint-7);
   }
-  for (let index = startPage; index < startPage + 7; index++) {
-    if (index === activePage) {
+
+  for (let index = pageStartPoint; index < pageStartPoint + 7; index++) {
+    if (index === activeOffset + pageStartPoint -1) {
       items.push(
         <span
           aria-current="page"
