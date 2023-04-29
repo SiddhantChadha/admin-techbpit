@@ -1,51 +1,36 @@
 import React, { useState } from "react";
 
-function PostsSearchBar() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(!open);
-  };
+function PostsSearchBar(props) {
+  const [val, setVal] = useState("");
+  const onSearchClicked = props.onSearchClicked;
   return (
-    <div className="flex w-7/12 sticky p-4 top-0 bg-gray-50">
-      <></>
-      <label>
-        What do we eat?
-        <select>
-          <option value="fruit">Fruit</option>
-
-          <option value="vegetable">Vegetable</option>
-
-          <option value="meat">Meat</option>
-        </select>
-      </label>
-      <div class="relative w-full">
+    <div className="flex items-center mt-4 mb-4 w-6/12 justify-center">
+      <div className="flex space-x-1 w-full">
         <input
-          type="search"
-          id="search-dropdown"
-          class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-          placeholder="Search Gropus, Users, Venue, Date ..."
-          required
+          type="text"
+          className="block w-full px-4 py-2 text-primaryBlue-700 bg-white border rounded-full focus:border-primaryBlue focus:ring-primaryBlue focus:outline-none focus:ring focus:ring-opacity-40"
+          placeholder="Search..."
+          onChange={(event) => setVal(event.target.value)}
+          value={val}
         />
         <button
-          type="submit"
-          class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="px-4 text-white bg-primaryBlue rounded-full "
+          onClick={() => onSearchClicked(val.toLowerCase())}
         >
           <svg
-            aria-hidden="true"
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
+            className="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
+            />
           </svg>
-          <span class="sr-only">Search</span>
         </button>
       </div>
     </div>

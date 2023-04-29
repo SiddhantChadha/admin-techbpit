@@ -260,19 +260,27 @@ const DATA = [
 ];
 
 function Posts() {
+  console.log("dws");
   const [activePage, setActivePage] = useState(0);
+  const [filteredData, setFilteredData] = useState(DATA);
   const itemsPerPage = 2;
-  const paginatedList = getItemsInPage(DATA, itemsPerPage, activePage);
+  const paginatedList = getItemsInPage(filteredData, itemsPerPage, activePage);
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const onSearchClicked = (query) => {
+    setActivePage((activePage) => 0);
+    setFilteredData((filteredData) => getFilteredData(query));
+    console.log("clicked");
+  };
+
   return (
     <div className="flex flex-col items-center max-h-screen justify-between">
       {/* <DropDown options={["ritik", "siddhant", "tushar"]} title={"Party Animals"} /> */}
-      <PostsSearchBar />
+      <PostsSearchBar onSearchClicked={onSearchClicked} />
       <div
-        className="flex flex-col items-center overflow-y-auto"
+        className="flex flex-col items-center overflow-y-auto w-6/12"
         id="journal-scroll"
       >
         {paginatedList.map((item) => getPostType(item))}
@@ -280,10 +288,10 @@ function Posts() {
       <PaginationBar
         activePage={activePage}
         setActivePage={setActivePage}
-        // maxPage={getMaximumNumberOfPages(DATA.length, itemsPerPage)}
-        maxPage={10}
+        maxPage={getMaximumNumberOfPages(filteredData.length, itemsPerPage)}
+        // maxPage={10}
         itemsPerPage={itemsPerPage}
-        totalResults={DATA.length}
+        totalResults={filteredData.length}
         pageResults={paginatedList.length}
       />
     </div>
@@ -309,4 +317,13 @@ function getMaximumNumberOfPages(listSize, itemsPerPage) {
     return listSize / itemsPerPage + 1;
   }
 }
+
+function getFilteredData(query) {
+  const filteredData = DATA.filter((o) => {
+    return o.groupId.groupName.toLowerCase().includes(query);
+  });
+  console.log(filteredData);
+  return filteredData;
+}
+
 export default Posts;

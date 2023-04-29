@@ -4,7 +4,7 @@ import { isoFormatToDate, isoFormatToMonth } from "../utils/DateTimeUtils";
 function EventPost(props) {
   const itemData = props.itemData;
   return (
-    <div className="my-12 bg-white mx-5 p-5 rounded-lg shadow-md w-5/12">
+    <div className="my-12 bg-white mx-5 p-5 rounded-lg shadow-md w-8/12">
       <div className="flex">
         <img
           className="h-10 w-10 rounded-full object-cover object-center"
