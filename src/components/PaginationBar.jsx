@@ -37,7 +37,9 @@ export default function PaginationBar(props) {
         <div>
           <p className="text-sm text-gray-700">
             Showing{" "}
-            <span className="font-medium">{activePage * itemsPerPage + 1}</span>{" "}
+            <span className="font-medium">
+              {totalResults > 0 ? activePage * itemsPerPage + 1 : 0}
+            </span>{" "}
             to{" "}
             <span className="font-medium">
               {activePage * itemsPerPage + pageResults}

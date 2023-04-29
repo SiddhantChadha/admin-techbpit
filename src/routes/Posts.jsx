@@ -5,6 +5,7 @@ import ResourcePost from "../components/ResourcePost";
 import PostsSearchBar from "../components/PostsSearchBar";
 import DropDown from "../components/DropDown";
 import PaginationBar from "../components/PaginationBar";
+import Filters from "../components/Filters";
 
 const DATA = [
   {
@@ -277,8 +278,12 @@ function Posts() {
 
   return (
     <div className="flex flex-col items-center max-h-screen justify-between">
-      {/* <DropDown options={["ritik", "siddhant", "tushar"]} title={"Party Animals"} /> */}
+      {/* <DropDown
+        options={["ritik", "siddhant", "tushar"]}
+        title={"Party Animals"}
+      /> */}
       <PostsSearchBar onSearchClicked={onSearchClicked} />
+      <Filters />
       <div
         className="flex flex-col items-center overflow-y-auto w-6/12"
         id="journal-scroll"
