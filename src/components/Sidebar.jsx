@@ -148,7 +148,7 @@ function Sidebar() {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center items-center relative inset-y-0 left-0 border-t-2 p-4">
+      <div className="flex flex-wrap justify-center items-center relative inset-y-0 left-0 border-t-2 p-3">
         <img
           className="h-10 w-10 rounded-full object-cover object-center "
           src="https://media.licdn.com/dms/image/D4D03AQFceRkjbq5tdA/profile-displayphoto-shrink_800_800/0/1672917303490?e=1687996800&v=beta&t=ehB56yxR9Rc2OsHQpu75K1tBWrnKtKp9QRaTQCh_RIg"

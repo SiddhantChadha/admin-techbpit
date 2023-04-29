@@ -3,7 +3,7 @@ import React from "react";
 function ResourceItem(props) {
   const itemData = props.itemData;
   return (
-    <div className="my-12 bg-white mx-4  rounded-xl shadow-md w-5/12">
+    <div className="my-12 bg-white mx-4  rounded-xl shadow-md w-8/12">
       <div className="p-6">
         <div className="flex items-center justify-between ">
           <img

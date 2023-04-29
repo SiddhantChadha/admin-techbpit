@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CommunityPost from "../components/CommunityPost";
 import EventPost from "../components/EventPost";
 import ResourcePost from "../components/ResourcePost";
 import PostsSearchBar from "../components/PostsSearchBar";
 import DropDown from "../components/DropDown";
 import PaginationBar from "../components/PaginationBar";
+import Filters from "../components/Filters";
 
 const DATA = [
   {
@@ -260,16 +261,44 @@ const DATA = [
 ];
 
 function Posts() {
+  console.log("dws");
+  const [activePage, setActivePage] = useState(0);
+  const [filteredData, setFilteredData] = useState(DATA);
+  const itemsPerPage = 2;
+  const paginatedList = getItemsInPage(filteredData, itemsPerPage, activePage);
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
+  const onSearchClicked = (query) => {
+    setActivePage((activePage) => 0);
+    setFilteredData((filteredData) => getFilteredData(query));
+    console.log("clicked");
+  };
+
   return (
-    <div className="flex flex-col items-center max-h-screen">
-      {/* <DropDown options={["ritik", "siddhant", "tushar"]} title={"Party Animals"} /> */}
-      <PaginationBar />
+    <div className="flex flex-col items-center max-h-screen justify-between">
+      {/* <DropDown
+        options={["ritik", "siddhant", "tushar"]}
+        title={"Party Animals"}
+      /> */}
+      <PostsSearchBar onSearchClicked={onSearchClicked} />
+      <Filters />
       <div
-        className="flex flex-col items-center overflow-y-auto"
+        className="flex flex-col items-center overflow-y-auto w-6/12"
         id="journal-scroll"
       >
-        {DATA.map((item) => getPostType(item))}
+        {paginatedList.map((item) => getPostType(item))}
       </div>
+      <PaginationBar
+        activePage={activePage}
+        setActivePage={setActivePage}
+        maxPage={getMaximumNumberOfPages(filteredData.length, itemsPerPage)}
+        // maxPage={10}
+        itemsPerPage={itemsPerPage}
+        totalResults={filteredData.length}
+        pageResults={paginatedList.length}
+      />
     </div>
   );
 }
@@ -279,4 +308,27 @@ function getPostType(item) {
     return <CommunityPost itemData={item} />;
   if (item.postType === "eventPost") return <EventPost itemData={item} />;
 }
+
+function getItemsInPage(DATA, itemsPerPage, pageNumber) {
+  const startIndex = itemsPerPage * pageNumber;
+  const endIndex = startIndex + itemsPerPage;
+  const list = DATA.slice(startIndex, endIndex);
+  return list;
+}
+function getMaximumNumberOfPages(listSize, itemsPerPage) {
+  if (listSize % itemsPerPage === 0) {
+    return listSize / itemsPerPage;
+  } else {
+    return listSize / itemsPerPage + 1;
+  }
+}
+
+function getFilteredData(query) {
+  const filteredData = DATA.filter((o) => {
+    return o.groupId.groupName.toLowerCase().includes(query);
+  });
+  console.log(filteredData);
+  return filteredData;
+}
+
 export default Posts;
