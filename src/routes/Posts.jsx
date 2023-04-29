@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CommunityPost from "../components/CommunityPost";
 import EventPost from "../components/EventPost";
 import ResourcePost from "../components/ResourcePost";
@@ -260,16 +260,32 @@ const DATA = [
 ];
 
 function Posts() {
+  const [activePage, setActivePage] = useState(0);
+  const itemsPerPage = 2;
+  const paginatedList = getItemsInPage(DATA, itemsPerPage, activePage);
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   return (
-    <div className="flex flex-col items-center max-h-screen">
+    <div className="flex flex-col items-center max-h-screen justify-between">
       {/* <DropDown options={["ritik", "siddhant", "tushar"]} title={"Party Animals"} /> */}
-      <PaginationBar />
+      <PostsSearchBar />
       <div
         className="flex flex-col items-center overflow-y-auto"
         id="journal-scroll"
       >
-        {DATA.map((item) => getPostType(item))}
+        {paginatedList.map((item) => getPostType(item))}
       </div>
+      <PaginationBar
+        activePage={activePage}
+        setActivePage={setActivePage}
+        // maxPage={getMaximumNumberOfPages(DATA.length, itemsPerPage)}
+        maxPage={10}
+        itemsPerPage={itemsPerPage}
+        totalResults={DATA.length}
+        pageResults={paginatedList.length}
+      />
     </div>
   );
 }
@@ -278,5 +294,19 @@ function getPostType(item) {
   if (item.postType === "communityPost")
     return <CommunityPost itemData={item} />;
   if (item.postType === "eventPost") return <EventPost itemData={item} />;
+}
+
+function getItemsInPage(DATA, itemsPerPage, pageNumber) {
+  const startIndex = itemsPerPage * pageNumber;
+  const endIndex = startIndex + itemsPerPage;
+  const list = DATA.slice(startIndex, endIndex);
+  return list;
+}
+function getMaximumNumberOfPages(listSize, itemsPerPage) {
+  if (listSize % itemsPerPage === 0) {
+    return listSize / itemsPerPage;
+  } else {
+    return listSize / itemsPerPage + 1;
+  }
 }
 export default Posts;
