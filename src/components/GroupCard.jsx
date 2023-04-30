@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function GroupCard(props) {
   const itemData = props.itemData;
@@ -16,9 +17,11 @@ function GroupCard(props) {
           {itemData.description}
         </span>
         <div class="flex mt-4 space-x-3 md:mt-6">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            View Posts
-          </button>
+          <Link to={`${itemData._id}`}>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              View Details
+            </button>
+          </Link>
           <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
             Delete
           </button>
