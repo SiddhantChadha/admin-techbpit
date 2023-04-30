@@ -259,8 +259,15 @@ const DATA = [
   },
 ];
 
-const postFilters = [{value:"Resource",checked:false},{value:"Event",checked:false},{value:"Community",checked:false}]
-const timeFilters = [{value:"1 week",checked:false},{value:"1 month",checked:false}]
+const postFilters = [
+  { value: "Resource", checked: false, type: "resourcePost" },
+  { value: "Event", checked: false, type: "eventPost" },
+  { value: "Community", checked: false, type: "communityPost" },
+];
+const timeFilters = [
+  { value: "1 week ago", checked: false },
+  { value: "1 month ago", checked: false },
+];
 
 function Posts() {
   console.log("dws");
@@ -268,9 +275,8 @@ function Posts() {
   const [filteredData, setFilteredData] = useState(DATA);
   const itemsPerPage = 2;
   const paginatedList = getItemsInPage(filteredData, itemsPerPage, activePage);
-  const [appliedPostFilter,setAppliedPostFilter] = useState(postFilters);
-  const [appliedTimeFilter,setAppliedTimeFilter] = useState(timeFilters)
-  
+  const [appliedPostFilter, setAppliedPostFilter] = useState(postFilters);
+  const [appliedTimeFilter, setAppliedTimeFilter] = useState(timeFilters);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -278,35 +284,52 @@ function Posts() {
 
   const onSearchClicked = (query) => {
     setActivePage((activePage) => 0);
-    setFilteredData((filteredData) => getFilteredData(query));
-    console.log("clicked");
+    setFilteredData((filteredData) => getSearchedData(filteredData, query));
+  };
+
+  const onPostFilterApplied = (newState) => {
+    setActivePage((activePage) => 0);
+    setAppliedPostFilter((appliedPostFilter) => newState);
+    setFilteredData((filteredData) =>
+      getPostFilteredData(filteredData, newState)
+    );
+  };
+
+  const onTimeFilterApplied = (newState) => {
+    setActivePage((activePage) => 0);
   };
 
   return (
-    <div className="flex flex-col items-center max-h-screen justify-between">
-      {/* <DropDown
-        options={["ritik", "siddhant", "tushar"]}
-        title={"Party Animals"}
-      /> */}
-      <PostsSearchBar onSearchClicked={onSearchClicked} />
-      <Filters appliedFilter={appliedPostFilter}  setAppliedFilter={setAppliedPostFilter} />
-      <Filters appliedFilter={appliedTimeFilter}  setAppliedFilter={setAppliedTimeFilter} />
-
-      <div
-        className="flex flex-col items-center overflow-y-auto w-6/12"
-        id="journal-scroll"
-      >
-        {paginatedList.map((item) => getPostType(item))}
+    <div className="flex flex-row">
+      <div className="flex flex-col items-center max-h-screen justify-between w-10/12">
+        <PostsSearchBar onSearchClicked={onSearchClicked} />
+        <div
+          className="flex flex-col items-center overflow-y-auto w-8/12"
+          id="journal-scroll"
+        >
+          {paginatedList.map((item) => getPostType(item))}
+        </div>
+        <PaginationBar
+          activePage={activePage}
+          setActivePage={setActivePage}
+          maxPage={getMaximumNumberOfPages(filteredData.length, itemsPerPage)}
+          itemsPerPage={itemsPerPage}
+          totalResults={filteredData.length}
+          pageResults={paginatedList.length}
+        />
       </div>
-      <PaginationBar
-        activePage={activePage}
-        setActivePage={setActivePage}
-        maxPage={getMaximumNumberOfPages(filteredData.length, itemsPerPage)}
-        // maxPage={10}
-        itemsPerPage={itemsPerPage}
-        totalResults={filteredData.length}
-        pageResults={paginatedList.length}
-      />
+      <div className=" w-2/12 flex flex-col items-center bg-white ">
+        {"Post Type"}
+        <Filters
+          appliedFilter={appliedPostFilter}
+          onFilterApplied={onPostFilterApplied}
+        />
+        Post Time
+        <Filters
+          appliedFilter={appliedTimeFilter}
+          onFilterApplied={onTimeFilterApplied}
+        />
+      </div>
     </div>
   );
 }
@@ -331,11 +354,24 @@ function getMaximumNumberOfPages(listSize, itemsPerPage) {
   }
 }
 
-function getFilteredData(query) {
-  const filteredData = DATA.filter((o) => {
+function getSearchedData(data, query) {
+  const filteredData = data.filter((o) => {
     return o.groupId.groupName.toLowerCase().includes(query);
   });
-  console.log(filteredData);
+  return filteredData;
+}
+
+function getPostFilteredData(data, filter) {
+  const filteredData = data.filter((o) => {
+    return filter.some((f) => f.checked && o.postType === f.type);
+  });
+  return filteredData;
+}
+
+function getTimeFilteredData(data, filter) {
+  const filteredData = data.filter((o) => {
+    return o.groupId.groupName.toLowerCase().includes(filter);
+  });
   return filteredData;
 }
 

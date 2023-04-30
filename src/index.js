@@ -15,6 +15,7 @@ import Posts from "./routes/Posts";
 import Users from "./routes/Users";
 import Login from "./routes/Login";
 import GroupDetail from "./routes/GroupDetail";
+import UserDetails from "./routes/UserDetails";
 
 // const router = createBrowserRouter([
 //   {
@@ -38,14 +39,19 @@ import GroupDetail from "./routes/GroupDetail";
 // ]);
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />} render={() => {
-      console.log("route rendereed")
-      redirect("posts")
-    }}>
+    <Route
+      path="/"
+      element={<App />}
+      render={() => {
+        console.log("route rendereed");
+        redirect("posts");
+      }}
+    >
       <Route path="posts" element={<Posts />} />
       <Route path="groups" element={<Groups />} />
       <Route path="users" element={<Users />} />
       <Route path="groups/:groupdId" element={<GroupDetail />} />
+      <Route path="users/:userId" element={<UserDetails />} />
     </Route>
   )
 );

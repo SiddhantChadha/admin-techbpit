@@ -5,13 +5,12 @@ module.exports = {
     extend: {
       colors: {
         primaryBlue: "#2E3094",
+        grayEF: "#EFEFEF",
       },
       fontSize: {
         xss: ".65rem",
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [require("@tailwindcss/forms")],
 };
