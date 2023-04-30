@@ -304,8 +304,8 @@ function GroupDetail() {
   }
 
   return (
-    <div className="flex flex-col items-center overflow-y-auto">
-      <DetailModal isOpen={isOpen} setIsOpen={setIsOpen} />
+    <div className="flex flex-col items-center ">
+        <DetailModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="w-2/3">
         <div className="flex items-center justify-center w-full">
           <img
