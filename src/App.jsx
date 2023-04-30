@@ -1,6 +1,9 @@
 import React from "react";
 import Sidebar from "./components/Sidebar";
 import { Outlet } from "react-router-dom";
+import UserDetails from "./routes/UserDetails";
+import GroupsJoinedList from "./components/GroupsJoinedList";
+import UserList from "./components/UserList";
 
 function App() {
   return (
