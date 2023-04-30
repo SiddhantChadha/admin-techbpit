@@ -14,6 +14,7 @@ import Groups from "./routes/Groups";
 import Posts from "./routes/Posts";
 import Users from "./routes/Users";
 import Login from "./routes/Login";
+import GroupDetail from "./routes/GroupDetail";
 
 // const router = createBrowserRouter([
 //   {
@@ -44,6 +45,7 @@ const router = createBrowserRouter(
       <Route path="posts" element={<Posts />} />
       <Route path="groups" element={<Groups />} />
       <Route path="users" element={<Users />} />
+      <Route path="groups/:groupdId" element={<GroupDetail />} />
     </Route>
   )
 );

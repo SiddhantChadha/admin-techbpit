@@ -3,7 +3,6 @@ import CommunityPost from "../components/CommunityPost";
 import EventPost from "../components/EventPost";
 import ResourcePost from "../components/ResourcePost";
 import PostsSearchBar from "../components/PostsSearchBar";
-import DropDown from "../components/DropDown";
 import PaginationBar from "../components/PaginationBar";
 import Filters from "../components/Filters";
 
@@ -260,12 +259,19 @@ const DATA = [
   },
 ];
 
+const postFilters = [{value:"Resource",checked:false},{value:"Event",checked:false},{value:"Community",checked:false}]
+const timeFilters = [{value:"1 week",checked:false},{value:"1 month",checked:false}]
+
 function Posts() {
   console.log("dws");
   const [activePage, setActivePage] = useState(0);
   const [filteredData, setFilteredData] = useState(DATA);
   const itemsPerPage = 2;
   const paginatedList = getItemsInPage(filteredData, itemsPerPage, activePage);
+  const [appliedPostFilter,setAppliedPostFilter] = useState(postFilters);
+  const [appliedTimeFilter,setAppliedTimeFilter] = useState(timeFilters)
+  
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -283,7 +289,9 @@ function Posts() {
         title={"Party Animals"}
       /> */}
       <PostsSearchBar onSearchClicked={onSearchClicked} />
-      <Filters />
+      <Filters appliedFilter={appliedPostFilter}  setAppliedFilter={setAppliedPostFilter} />
+      <Filters appliedFilter={appliedTimeFilter}  setAppliedFilter={setAppliedTimeFilter} />
+
       <div
         className="flex flex-col items-center overflow-y-auto w-6/12"
         id="journal-scroll"
