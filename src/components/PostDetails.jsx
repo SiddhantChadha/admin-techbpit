@@ -1,129 +1,77 @@
 import React from "react";
 
-function UserDetails() {
-  const skills = [
-    "Android",
-    "Node",
-    "React",
-    "React native",
-    "xml",
-    "sql",
-    "html",
-    "css",
-    "java",
-    "javascript",
-    "monogDb",
-    "headless UI",
-    "redis",
-  ];
-  const socialLinks = [
-    {
-      platformImg: "https://cdn-icons-png.flaticon.com/512/174/174857.png",
-      platformLink: "https://www.linkedin.com/feed/",
-      _id: "644e6c1bf4fe71d034438243",
-    },
-    {
-      platformImg:
-        "https://play-lh.googleusercontent.com/PCpXdqvUWfCW1mXhH1Y_98yBpgsWxuTSTofy3NGMo9yBTATDyzVkqU580bfSln50bFU",
-      platformLink: "https://github.com/tjain1511",
-      _id: "644e6c1bf4fe71d034438244",
-    },
-    {
-      platformImg: "https://leetcode.com/static/images/LeetCode_logo_rvs.png",
-      platformLink: "https://leetcode.com/",
-      _id: "644e6c1bf4fe71d034438245",
-    },
-    {
-      platformImg:
-        "https://play-lh.googleusercontent.com/EkSlLWf2-04k5Y5F_MDLqoXPdo0TyZX3zKdCfsEUDqVB7INUypTOd6AVmkE_X7ej3JuR",
-      platformLink: "https://codeforces.com/",
-      _id: "644e6c1bf4fe71d034438246",
-    },
-    {
-      platformImg:
-        "https://pbs.twimg.com/profile_images/1477930785537605633/ROTVNVz7_400x400.jpg",
-      platformLink: "https://www.codechef.com/",
-      _id: "644e6c1bf4fe71d034438247",
-    },
-    {
-      platformImg:
-        "https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png",
-      platformLink: "https://www.apple.com/in/?cid-oas-in-domains-apple.in/",
-      _id: "644e6c1bf4fe71d034438248",
-    },
-  ];
+function PostDetails() {
   return (
-    <div className="flex flex-col bg-white rounded-lg shadow-lg w-7/12 px-2 my-4 border-2 justify-center max-h-screen m-auto">
-      <div className="flex flex-row mx-4 border-b-2 items-center">
-        <img
-          className="w-40 h-40 mx-16 my-4 rounded-full shadow-lg"
-          src={
-            "https://media.licdn.com/dms/image/C5103AQHExyLqyBIe8w/profile-displayphoto-shrink_400_400/0/1567182680271?e=1688601600&v=beta&t=8_sbN0uH3zO4oK3qk9tNYtOjmMwOqlxxoURPGQd2BSc"
-          }
-        />
-        <div className="flex flex-col m-4">
-          <div className="flex flex-row items-center">
-            <div className="font-semibold text-lg p-2">Tushar Jain</div>
-            <div className="text-xs mx-2  font-semibold p-2 rounded-lg bg-grayEF">
-              4th Year
-            </div>
-            <div className=" mx-2  font-semibold p-2 rounded-md bg-grayEF">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-4 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className=" px-2 flex flex-row items-center my-4">
-            <div className="mr-1 font-semibold">17</div>
-            <div className="">following</div>
-            <div className="ml-4 mr-1 font-semibold">8</div>
-            <div className="">projects</div>
-          </div>
-          <div className="px-2">tjain210@gmail.com</div>
-          <div className="px-2">Uttar Pradesh, Noida</div>
-          <div className="px-2">
-            <div className="font-bold">About</div>
-            <div>Student | Programmer 🧑‍💻 | Learner</div>
+    <div className="flex bg-white rounded-lg shadow-lg w-7/12 h-4/6 px-2 m-auto">
+      <img
+        className=" my-4 w-1/2 object-contain mx-2 bg-gray1D2226 rounded-lg px-4"
+        src={
+          "https://www.freelancevideocollective.com/wp-content/uploads/2020/07/Aspect-ratios-comparison-chart_1.jpg"
+        }
+      />
+      <div
+        className="flex flex-col px-2 my-4 overflow-y-scroll"
+        id="journal-scroll"
+      >
+        <div className="font-bold text-lg text-center my-1 ">
+          Code Rush X, NSCC BPIT's
+        </div>
+        <div className="text-justify">
+          Hello there 👋 It's 2023 folks and what else could be the best way to
+          get started this year than by participating in a major Coding Contest
+          ☺😇😇 Well the TIME has finally arrived for the 3rd Edition of Code
+          Rush X , NSCC BPIT's flagship grand coding contest 📣🥳 Important ⚠⚠
+          All those who want to join NSCC BPIT are required to take part in this
+          contest as we'll be shortlisting the candidates on the basis of their
+          score in this contest. 😊😊𝗣.𝗦. This event happens only twice a year
+          and you are invited to be a part of the best Global Coding Contest. ✨
+          Team NSCC BPIT code your way to success 💻
+        </div>
+        <div className="flex flex-row items-center">
+          <div className="font-semibold mr-2">Organizer:</div>
+          <div>Tushar jain</div>
+        </div>
+        <div className="flex flex-row items-center">
+          <div className="font-semibold mr-2">Date:</div>
+          <div>21 JAN</div>
+        </div>
+        <div className="flex flex-row items-center">
+          <div className="font-semibold mr-2">Time:</div>
+          <div>03:00 PM</div>
+        </div>
+        <div className="flex flex-row items-center">
+          <div className="font-semibold mr-2">Venue:</div>
+          <div>6A, conference room, BPIT</div>
+        </div>
+        {/* author details */}
+        <div className="flex flex-row my-4 items-center">
+          <img
+            className="w-8 h-8 mr-4 rounded-full shadow-lg"
+            src={
+              "https://media.licdn.com/dms/image/C5103AQHExyLqyBIe8w/profile-displayphoto-shrink_400_400/0/1567182680271?e=1688601600&v=beta&t=8_sbN0uH3zO4oK3qk9tNYtOjmMwOqlxxoURPGQd2BSc"
+            }
+          />
+          <div>
+            <div className="text-xss font-bold">Tushar Jain</div>
+            <div className="text-xss font-semibold text-gray-500">Author</div>
           </div>
         </div>
-      </div>
-      <div className="mx-4 border-b-2">
-        <div className="m-2 font-bold">Skills</div>
-        <div className="flex flex-row flex-wrap mb-4">
-          {skills.map((skill) => (
-            <div className="bg-gray-400 p-2 m-2 rounded-lg text-white">
-              {skill}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="mx-4 mb-4">
-        <div className="m-2 font-bold">Social/Portfolio</div>
-        <div className="flex flex-row flex-wrap ">
-          {socialLinks.map((socialLink) => (
-            <div className="flex flex-row items-center rounded-lg bg-grayEF m-2 p-2">
-              <img
-                className="w-4 h-4 mr-2 shadow-lg"
-                src={socialLink.platformImg}
-              />
-              <div className=" text-blue-500">{socialLink.platformLink}</div>
-            </div>
-          ))}
+        {/* group details */}
+        <div className="flex flex-row items-center mb-4">
+          <img
+            className="w-8 h-8 mr-4 rounded-full shadow-lg"
+            src={
+              "https://w7.pngwing.com/pngs/780/57/png-transparent-node-js-javascript-database-mongodb-native-miscellaneous-text-trademark.png"
+            }
+          />
+          <div>
+            <div className="text-xss font-bold">NodeJs</div>
+            <div className="text-xss font-semibold text-gray-500">Owner</div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default UserDetails;
+export default PostDetails;
