@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/images/logo.png";
 import { Link, NavLink } from "react-router-dom";
+import LogoutModal from "./LogoutModal";
 
 function Sidebar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className=" flex flex-col top-0 left-0 w-64 bg-white min-h-full border-r text-gray-800 justify-between">
       <div>
@@ -114,7 +117,7 @@ function Sidebar() {
             </li>
             <li>
               <NavLink
-                href="#"
+                onClick={() => setOpen(true)}
                 className={({ isActive, isPending }) =>
                   isActive
                     ? "relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
@@ -142,6 +145,7 @@ function Sidebar() {
                 <span className="ml-2 text-sm tracking-wide truncate">
                   Logout
                 </span>
+                <LogoutModal open={open} setOpen={setOpen} />
               </NavLink>
             </li>
           </ul>
