@@ -279,9 +279,9 @@ const users = [
 ];
 function UserList() {
   return (
-    <div className="px-2 flex justify-center w-3/4 mx-auto h-1/2">
+    <div className=" flex justify-center w-full m-auto h-96 ">
       <div
-        className="grid grid-cols-2 gap-6 overflow-y-auto"
+        className="w-full grid grid-cols-2 gap-6 overflow-y-auto"
         id="journal-scroll"
       >
         {users.map((item) => (
