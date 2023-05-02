@@ -318,16 +318,16 @@ function Posts() {
           pageResults={paginatedList.length}
         />
       </div>
-      <div className=" w-2/12 flex flex-col items-center bg-white ">
-        {"Post Type"}
+      <div className="h-fit w-2/12 flex flex-col items-center bg-white py-4">
         <Filters
           appliedFilter={appliedPostFilter}
           onFilterApplied={onPostFilterApplied}
+          heading="Post Type"
         />
-        Post Time
         <Filters
           appliedFilter={appliedTimeFilter}
           onFilterApplied={onTimeFilterApplied}
+          heading="Post Time"
         />
       </div>
     </div>

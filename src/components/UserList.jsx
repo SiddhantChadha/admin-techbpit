@@ -279,7 +279,7 @@ const users = [
 ];
 function UserList() {
   return (
-    <div className="px-2 flex justify-center w-3/4 mx-auto max-h-screen">
+    <div className="px-2 flex justify-center w-3/4 mx-auto h-1/2">
       <div
         className="grid grid-cols-2 gap-6 overflow-y-auto"
         id="journal-scroll"
