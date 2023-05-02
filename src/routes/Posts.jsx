@@ -270,7 +270,7 @@ const timeFilters = [
 ];
 
 function Posts() {
-  console.log("dws");
+  const [searchQuery, setSearchQuery] = useState("");
   const [activePage, setActivePage] = useState(0);
   const [filteredData, setFilteredData] = useState(DATA);
   const itemsPerPage = 2;
@@ -284,15 +284,15 @@ function Posts() {
 
   const onSearchClicked = (query) => {
     setActivePage((activePage) => 0);
-    setFilteredData((filteredData) => getSearchedData(filteredData, query));
+    setSearchQuery((searchQuery) => query);
+    setFilteredData(filterData(DATA, query, appliedPostFilter));
   };
 
   const onPostFilterApplied = (newState) => {
+    console.log(newState);
     setActivePage((activePage) => 0);
     setAppliedPostFilter((appliedPostFilter) => newState);
-    setFilteredData((filteredData) =>
-      getPostFilteredData(filteredData, newState)
-    );
+    setFilteredData(filterData(DATA, searchQuery, newState));
   };
 
   const onTimeFilterApplied = (newState) => {
@@ -354,6 +354,13 @@ function getMaximumNumberOfPages(listSize, itemsPerPage) {
   }
 }
 
+function filterData(data, query, filter) {
+  let filterData = getSearchedData(data, query);
+  console.log("search", filterData.length);
+  filterData = getPostFilteredData(filterData, filter);
+  return filterData;
+}
+
 function getSearchedData(data, query) {
   const filteredData = data.filter((o) => {
     return o.groupId.groupName.toLowerCase().includes(query);
@@ -362,15 +369,16 @@ function getSearchedData(data, query) {
 }
 
 function getPostFilteredData(data, filter) {
-  const filteredData = data.filter((o) => {
-    return filter.some((f) => f.checked && o.postType === f.type);
-  });
+  const filteredData = data.filter((itemData) =>
+    filter.some((f) => f.checked && f.type === itemData.postType)
+  );
+  if (filter.every((f) => !f.checked)) return data;
   return filteredData;
 }
 
 function getTimeFilteredData(data, filter) {
   const filteredData = data.filter((o) => {
-    return o.groupId.groupName.toLowerCase().includes(filter);
+    return o.timestamp.toLowerCase().includes(filter);
   });
   return filteredData;
 }
