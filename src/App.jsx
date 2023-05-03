@@ -13,13 +13,15 @@ function App() {
     <Routes>
       <Route path="login" element={<Login />} />
 
-      <Route path="/" element={<ProtectRoutes />}>
+      <Route path="/" element={<ProtectRoutes />} >
         <Route path="posts" element={<Posts />} />
         <Route path="groups" element={<Groups />} />
         <Route path="users" element={<Users />} />
         <Route path="groups/:groupdId" element={<GroupDetail />} />
         <Route path="users/:userId" element={<UserDetails />} />
       </Route>
+
+      <Route index element={<Navigate to='posts' />}></Route>
     </Routes>
   );
 }
