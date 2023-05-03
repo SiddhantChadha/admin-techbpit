@@ -277,14 +277,14 @@ const users = [
       "https://toppng.com/public/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
   },
 ];
-function UserList() {
+function UserList({ userList }) {
   return (
     <div className=" flex justify-center w-full m-auto h-96 ">
       <div
         className="w-full grid grid-cols-2 gap-6 overflow-y-auto"
         id="journal-scroll"
       >
-        {users.map((item) => (
+        {userList.map((item) => (
           <div className="flex flex-row items-center">
             <img class="w-12 h-12 my-3 rounded-full" src={item.image} />
             <div className="mx-2 font-semibold">{item.username}</div>

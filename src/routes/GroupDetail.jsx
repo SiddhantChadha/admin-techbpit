@@ -8,282 +8,46 @@ import { useEffect } from "react";
 import Loader from "../components/Loader";
 import { getGroupDetail } from "../api/GroupAPI";
 import { useAuth } from "../hooks/auth";
+import { useParams } from "react-router";
+import { getGroupPosts } from "../api/PostsAPI";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const postData = [
-  {
-    _id: "63c3fb6f6b6759362cd85e68",
-    author: {
-      _id: "63add416bc3a132d96ce6cb2",
-      username: "Siddhant",
-      image:
-        "https://toppng.com/public/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
-    },
-    timestamp: "1673788271338",
-    postType: "resourcePost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    topic: "web dev",
-    description: "this djshakrhsvs",
-    resourceTime: "100 hours",
-    link: "www.trchbpit.com",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d964fa117ab324758d97",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779554627",
-    postType: "communityPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    description: "Bhai validation chal rhi h fir dikkt na ho rhne de mt chhed",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d821fa117ab324758d7f",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779231926",
-    postType: "eventPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    eventDate: "2001-01-15T00:00:00.000Z",
-    eventTime: "04:09 PM",
-    mode: "online",
-    topic: "Test topic",
-    description: "qwerty keypad qwerty keypad",
-    link: "meeting.com",
-    canEdit: false,
-  },
-  {
-    _id: "63c3fb6f6b6759362cd85e68",
-    author: {
-      _id: "63add416bc3a132d96ce6cb2",
-      username: "Siddhant",
-      image:
-        "https://toppng.com/public/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
-    },
-    timestamp: "1673788271338",
-    postType: "resourcePost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    topic: "web dev",
-    description: "this djshakrhsvs",
-    resourceTime: "100 hours",
-    link: "www.trchbpit.com",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d964fa117ab324758d97",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779554627",
-    postType: "communityPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    description: "Bhai validation chal rhi h fir dikkt na ho rhne de mt chhed",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d821fa117ab324758d7f",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779231926",
-    postType: "eventPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    eventDate: "2001-01-15T00:00:00.000Z",
-    eventTime: "04:09 PM",
-    mode: "online",
-    topic: "Test topic",
-    description: "qwerty keypad qwerty keypad",
-    link: "meeting.com",
-    canEdit: false,
-  },
-  {
-    _id: "63c3fb6f6b6759362cd85e68",
-    author: {
-      _id: "63add416bc3a132d96ce6cb2",
-      username: "Siddhant",
-      image:
-        "https://toppng.com/public/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
-    },
-    timestamp: "1673788271338",
-    postType: "resourcePost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    topic: "web dev",
-    description: "this djshakrhsvs",
-    resourceTime: "100 hours",
-    link: "www.trchbpit.com",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d964fa117ab324758d97",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779554627",
-    postType: "communityPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    description: "Bhai validation chal rhi h fir dikkt na ho rhne de mt chhed",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d821fa117ab324758d7f",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779231926",
-    postType: "eventPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    eventDate: "2001-01-15T00:00:00.000Z",
-    eventTime: "04:09 PM",
-    mode: "online",
-    topic: "Test topic",
-    description: "qwerty keypad qwerty keypad",
-    link: "meeting.com",
-    canEdit: false,
-  },
-  {
-    _id: "63c3fb6f6b6759362cd85e68",
-    author: {
-      _id: "63add416bc3a132d96ce6cb2",
-      username: "Siddhant",
-      image:
-        "https://toppng.com/public/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
-    },
-    timestamp: "1673788271338",
-    postType: "resourcePost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    topic: "web dev",
-    description: "this djshakrhsvs",
-    resourceTime: "100 hours",
-    link: "www.trchbpit.com",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d964fa117ab324758d97",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779554627",
-    postType: "communityPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    description: "Bhai validation chal rhi h fir dikkt na ho rhne de mt chhed",
-    canEdit: false,
-  },
-  {
-    _id: "63c3d821fa117ab324758d7f",
-    author: {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    timestamp: "1673779231926",
-    postType: "eventPost",
-    groupId: {
-      _id: "63add2285086f6fca8576f0c",
-      groupName: "NodeJs",
-      image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-    },
-    eventDate: "2001-01-15T00:00:00.000Z",
-    eventTime: "04:09 PM",
-    mode: "online",
-    topic: "Test topic",
-    description: "qwerty keypad qwerty keypad",
-    link: "meeting.com",
-    canEdit: false,
-  },
-];
-
 function GroupDetail() {
+  const params = useParams();
+
   const [isOpen, setIsOpen] = useState(false);
-  const [data,setData] = useState({});
+  const [data, setData] = useState({});
+  const [postData, setPostdata] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { cookies } = useAuth();
+  const [userList, setUserList] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsLoading(true);
     async function fetchData() {
       try {
-        const data = await getGroupDetail(cookies.token,"63add2285086f6fca8576f0c");
+        const data = await getGroupDetail(cookies.token, params.groupdId);
         setData(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
+    }
+    async function fetchPostData() {
+      try {
+        const data = await getGroupPosts(cookies.token, params.groupdId);
+        setPostdata(data);
       } catch (err) {
         console.log(err);
       }
     }
-    fetchData()
-    setIsLoading(false);
-  })
-
+    fetchPostData();
+    fetchData();
+  }, []);
 
   function closeModal() {
     setIsOpen(false);
@@ -293,33 +57,52 @@ function GroupDetail() {
     setIsOpen(true);
   }
 
-  return (
-    isLoading?<Loader />:
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div
       className="flex flex-col items-center max-h-screen overflow-auto"
       id="journal-scroll"
     >
-      <DetailModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <DetailModal isOpen={isOpen} setIsOpen={setIsOpen} userList={userList} />
       <div className="w-2/3">
         <div className="flex items-center justify-center w-full">
           <img
-            src={(data.image)?data.image:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Example_image.svg/600px-Example_image.svg.png"}
+            src={
+              data.image
+                ? data.image
+                : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Example_image.svg/600px-Example_image.svg.png"
+            }
             alt="logo"
-            className="rounded-full w-16 h-16 object-contain border border-black"
+            className="w-40 h-40 mx-12 my-4 rounded-full shadow-lg"
           />
 
           <div className="flex flex-col m-10 w-1/2">
-            <span className="text-3xl font-semibold">{(data.groupName)?data.groupName:""}</span>
+            <span className="text-3xl font-semibold">
+              {data.groupName ? data.groupName : ""}
+            </span>
             <div className="flex flex-row items-center my-4">
-              <div className="flex" onClick={openModal}>
+              <div
+                className="flex"
+                onClick={() => {
+                  setUserList(data.moderators);
+                  openModal();
+                }}
+              >
                 <div className="mr-1 font-semibold">
-                  {(data.moderators.length)?data.moderators.length:0}
+                  {data.moderators ? data.moderators.length : 0}
                 </div>
                 <div>Mentors</div>
               </div>
-              <div className="flex" onClick={openModal}>
+              <div
+                className="flex"
+                onClick={() => {
+                  setUserList(data.usersJoined);
+                  openModal();
+                }}
+              >
                 <div className="ml-4 mr-1 font-semibold">
-                  {(data.usersJoined.length)?data.usersJoined.length:0}
+                  {data.usersJoined ? data.usersJoined.length : 0}
                 </div>
                 <div>Participants</div>
               </div>
