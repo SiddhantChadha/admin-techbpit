@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import GroupCard from "../components/GroupCard";
 import CreateGroupModal from "../components/CreateGroupModal";
 import Loader from "../components/Loader";
@@ -8,8 +8,8 @@ import { useAuth } from "../hooks/auth";
 function Groups() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const {cookies} = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const { cookies } = useAuth();
 
   useEffect(() => {
     setIsLoading(true);
@@ -21,23 +21,22 @@ function Groups() {
         console.log(err);
       }
     }
-    fetchData()
+    fetchData();
     setIsLoading(false);
-  },[]);
-
+  }, [open]);
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="px-2 flex justify-center w-3/4 mx-auto max-h-screen">
-      <div
-        className="flex flex-wrap -mb-4 -mx-2 overflow-y-auto"
-        id="journal-scroll"
-      >
+    <div
+      className="px-2 flex justify-center max-h-screen w-full overflow-y-auto"
+      id="journal-scroll"
+    >
+      <div className="flex flex-wrap -mb-4 ml-6">
         {data.map((item) => (
           <GroupCard itemData={item} />
         ))}
       </div>
-      <div className="flex fixed bottom-0 right-36 m-6 bg-primaryBlue rounded items-center">
+      <div className="flex fixed bottom-0 right-6 m-6 bg-primaryBlue rounded items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

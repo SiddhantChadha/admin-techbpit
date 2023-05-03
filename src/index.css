@@ -32,6 +32,7 @@ code {
 }
 #journal-scroll::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
-  background-color: #000000;
+  background-color: #2E3094 ;
+;
 }
 

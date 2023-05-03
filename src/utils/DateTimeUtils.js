@@ -48,7 +48,7 @@ export const isoFormatToMonth = (dateString) => {
 export const isSevenDaysAgo = (timestamp) => {
   // Calculate the timestamp for 7 days ago (in milliseconds)
   const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-  if (timestamp < sevenDaysAgo) {
+  if (Date.parse(timestamp) > sevenDaysAgo) {
     return true;
   } else {
     return false;
@@ -58,7 +58,10 @@ export const isSevenDaysAgo = (timestamp) => {
 export const isThirtyDaysAgo = (timestamp) => {
   // Calculate the timestamp for 7 days ago (in milliseconds)
   const sevenDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
-  if (timestamp < sevenDaysAgo) {
+  console.log(timestamp, sevenDaysAgo);
+
+  if (timestamp > sevenDaysAgo) {
+    console.log("timestamp");
     return true;
   } else {
     return false;

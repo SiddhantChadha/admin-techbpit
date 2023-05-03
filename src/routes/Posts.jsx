@@ -195,17 +195,18 @@ function getTimeFilteredData(data, filter) {
   var filteredData = data;
   filter.map((f) => {
     if (f.checked && f.type == 7) {
-      filteredData = filteredData.filter((itemData) => {
+      filteredData = data.filter((itemData) => {
         isSevenDaysAgo(itemData.timestamp);
       });
     }
     if (f.checked && f.type == 30) {
-      filteredData = filteredData.filter((itemData) => {
+      filteredData = data.filter((itemData) => {
         isThirtyDaysAgo(itemData.timestamp);
       });
+      console.log("valid");
     }
   });
-  if (filter.every((f) => !f.checked)) return data;
+  if (filter.every((f) => !f  .checked)) return data;
   return filteredData;
 }
 

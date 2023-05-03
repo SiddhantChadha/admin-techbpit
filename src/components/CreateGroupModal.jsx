@@ -5,14 +5,15 @@ import Upload from "./Upload";
 import { createGroup } from "../api/GroupAPI";
 import { useAuth } from "../hooks/auth";
 import Loader from "./Loader";
+import { async } from "q";
 
 function CreateGroupModal({ open, setOpen }) {
   const [cloudinaryImage, setCloudinaryImage] = useState(
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcnTCrjKmRCJDwebeZdr5iVQ_9QFHwtLEJsQ&usqp=CAU"
   );
 
-  const [groupName,setGroupName] = useState();
-  const [description,setDescription] = useState();
+  const [groupName, setGroupName] = useState();
+  const [description, setDescription] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
   const { cookies } = useAuth();
@@ -20,15 +21,16 @@ function CreateGroupModal({ open, setOpen }) {
   async function fetchData() {
     setIsLoading(true);
     try {
-       await createGroup(cookies.token,groupName,cloudinaryImage,description);
+      await createGroup(cookies.token, groupName, cloudinaryImage, description);
     } catch (err) {
       console.log(err);
     }
     setIsLoading(false);
   }
 
-  return (
-    isLoading?<Loader />:
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
         <Transition.Child
@@ -90,8 +92,8 @@ function CreateGroupModal({ open, setOpen }) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-primaryBlue px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
-                    onClick={() => {
-                      fetchData();
+                    onClick={async () => {
+                      await fetchData();
                       setOpen(false);
                     }}
                   >
