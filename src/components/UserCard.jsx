@@ -30,7 +30,7 @@ function UserCard(props) {
   return (
     <div className="hover:bg-gray-200 flex shadow-md bg-white items-center w-full ">
       <Link to={`${itemData._id}`}>
-        <div className="flex gap-3 px-6 py-4 font-normal text-gray-900">
+        <div className="flex flex-1 gap-3 px-6 py-4 font-normal text-gray-900">
           <div className="relative h-10 w-10">
             <img
               className="h-full w-full rounded-full object-cover object-center"
@@ -43,7 +43,7 @@ function UserCard(props) {
           </div>
         </div>
       </Link>
-      <div className="px-6 py-4">
+      <div className="px-6 py-4 flex-1">
         {itemData.isBlocked ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
             <span className="h-1.5 w-1.5 rounded-full bg-red-600"></span>
@@ -56,7 +56,7 @@ function UserCard(props) {
           </span>
         )}
       </div>
-      <div className="px-6 py-4">{itemData.yearOfStudy}</div>
+      <div className="px-6 py-4 flex-1 text-center">{itemData.yearOfStudy}</div>
       <div className="px-6 py-4">
         <div className="flex gap-2">
           {itemData.skills.map((obj) => {
@@ -68,8 +68,8 @@ function UserCard(props) {
           })}
         </div>
       </div>
-      <div className="px-6 py-4">
-        <div className="flex justify-end gap-4">
+      <div className="px-6 py-4 flex-1">
+        <div className="flex justify-center gap-4">
           {itemData.isBlocked ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
