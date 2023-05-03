@@ -1,9 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import UserList from "../components/UserList";
+import { Fragment} from "react";
 import GroupsJoinedList from "./GroupsJoinedList";
 
-function JoinedGropuModal({ isOpen, setIsOpen }) {
+function JoinedGropuModal({ isOpen, setIsOpen,data}) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -42,7 +41,7 @@ function JoinedGropuModal({ isOpen, setIsOpen }) {
                   Joined Communities
                 </Dialog.Title>
                 <div className="mt-2">
-                  <GroupsJoinedList />
+                  <GroupsJoinedList data={data} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

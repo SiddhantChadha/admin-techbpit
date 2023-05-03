@@ -1,62 +1,11 @@
 import React, { useState, useEffect } from "react";
-import JoinedGropuModal from "../components/JoinedGropuModal";
+import JoinedGroupModal from "../components/JoinedGroupModal";
 import { useParams } from "react-router";
 import { getUserById } from "../api/UserAPI";
 import { useAuth } from "../hooks/auth";
 import Loader from "../components/Loader";
 
 function UserDetails() {
-  const skills = [
-    "Android",
-    "Node",
-    "React",
-    "React native",
-    "xml",
-    "sql",
-    "html",
-    "css",
-    "java",
-    "javascript",
-    "monogDb",
-    "headless UI",
-    "redis",
-  ];
-  const socialLinks = [
-    {
-      platformImg: "https://cdn-icons-png.flaticon.com/512/174/174857.png",
-      platformLink: "https://www.linkedin.com/feed/",
-      _id: "644e6c1bf4fe71d034438243",
-    },
-    {
-      platformImg:
-        "https://play-lh.googleusercontent.com/PCpXdqvUWfCW1mXhH1Y_98yBpgsWxuTSTofy3NGMo9yBTATDyzVkqU580bfSln50bFU",
-      platformLink: "https://github.com/tjain1511",
-      _id: "644e6c1bf4fe71d034438244",
-    },
-    {
-      platformImg: "https://leetcode.com/static/images/LeetCode_logo_rvs.png",
-      platformLink: "https://leetcode.com/",
-      _id: "644e6c1bf4fe71d034438245",
-    },
-    {
-      platformImg:
-        "https://play-lh.googleusercontent.com/EkSlLWf2-04k5Y5F_MDLqoXPdo0TyZX3zKdCfsEUDqVB7INUypTOd6AVmkE_X7ej3JuR",
-      platformLink: "https://codeforces.com/",
-      _id: "644e6c1bf4fe71d034438246",
-    },
-    {
-      platformImg:
-        "https://pbs.twimg.com/profile_images/1477930785537605633/ROTVNVz7_400x400.jpg",
-      platformLink: "https://www.codechef.com/",
-      _id: "644e6c1bf4fe71d034438247",
-    },
-    {
-      platformImg:
-        "https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png",
-      platformLink: "https://www.apple.com/in/?cid-oas-in-domains-apple.in/",
-      _id: "644e6c1bf4fe71d034438248",
-    },
-  ];
   const params = useParams();
   const { cookies } = useAuth();
   const [data, setData] = useState({});
@@ -123,7 +72,7 @@ function UserDetails() {
               <div className="">projects</div>
             </div>
           </div>
-            <div className="px-2">{data.email}</div>
+          <div className="px-2">{data.email}</div>
           <div className="px-2">
             {data.city}, {data.state}
           </div>
@@ -167,7 +116,7 @@ function UserDetails() {
       ) : (
         <></>
       )}
-      <JoinedGropuModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <JoinedGroupModal isOpen={isOpen} setIsOpen={setIsOpen} data={data.groupsJoined}/>
     </div>
   );
 }

@@ -1,80 +1,13 @@
 import React from "react";
-const groups = [
-  {
-    _id: "63c5f871aea9c742cbe465f4",
-    groupName: "Machine Learning",
-    image:
-      "https://builtin.com/sites/www.builtin.com/files/styles/og/public/2021-12/machine-learning-examples-applications.png",
-  },
-  {
-    _id: "63add2285086f6fca8576f0c",
-    groupName: "NodeJs",
-    image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-  },
-  {
-    _id: "63add2605086f6fca8576f14",
-    groupName: "Android",
-    image:
-      "https://1000logos.net/wp-content/uploads/2016/10/Android-Logo-2008.png",
-  },
-  {
-    _id: "63c5f8ceaea9c742cbe465f6",
-    groupName: "Django",
-    image: "https://www.fullstackpython.com/img/logos/django.png",
-  },
-  {
-    _id: "63c5f871aea9c742cbe465f4",
-    groupName: "Machine Learning",
-    image:
-      "https://builtin.com/sites/www.builtin.com/files/styles/og/public/2021-12/machine-learning-examples-applications.png",
-  },
-  {
-    _id: "63add2285086f6fca8576f0c",
-    groupName: "NodeJs",
-    image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-  },
-  {
-    _id: "63add2605086f6fca8576f14",
-    groupName: "Android",
-    image:
-      "https://1000logos.net/wp-content/uploads/2016/10/Android-Logo-2008.png",
-  },
-  {
-    _id: "63c5f8ceaea9c742cbe465f6",
-    groupName: "Django",
-    image: "https://www.fullstackpython.com/img/logos/django.png",
-  },
-  {
-    _id: "63c5f871aea9c742cbe465f4",
-    groupName: "Machine Learning",
-    image:
-      "https://builtin.com/sites/www.builtin.com/files/styles/og/public/2021-12/machine-learning-examples-applications.png",
-  },
-  {
-    _id: "63add2285086f6fca8576f0c",
-    groupName: "NodeJs",
-    image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-  },
-  {
-    _id: "63add2605086f6fca8576f14",
-    groupName: "Android",
-    image:
-      "https://1000logos.net/wp-content/uploads/2016/10/Android-Logo-2008.png",
-  },
-  {
-    _id: "63c5f8ceaea9c742cbe465f6",
-    groupName: "Django",
-    image: "https://www.fullstackpython.com/img/logos/django.png",
-  },
-];
-function GroupsJoinedList() {
+
+function GroupsJoinedList({data}) {
   return (
     <div className=" flex justify-center w-full m-auto h-96 ">
       <div
         className="w-full grid grid-cols-2 gap-6 overflow-y-auto"
         id="journal-scroll"
       >
-        {groups.map((item) => (
+        {data.map((item) => (
           <div className="flex flex-row items-center">
             <img class="w-12 h-12 my-3 rounded-full" src={item.image} />
             <div className="mx-2 font-semibold">{item.groupName}</div>
