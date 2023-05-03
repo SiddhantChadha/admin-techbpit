@@ -17,7 +17,7 @@ function GroupCard(props) {
           {itemData.description}
         </span>
         <div class="flex mt-4 space-x-3 md:mt-6">
-          <Link to={`${itemData._id}`}>
+          <Link to={`${itemData._id}`}  >
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               View Details
             </button>
