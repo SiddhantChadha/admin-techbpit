@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import JoinedGropuModal from "../components/JoinedGropuModal";
+import { useParams } from "react-router";
+import { getUserById } from "../api/UserAPI";
+import { useAuth } from "../hooks/auth";
+import Loader from "../components/Loader";
 
 function UserDetails() {
   const skills = [
@@ -53,22 +57,39 @@ function UserDetails() {
       _id: "644e6c1bf4fe71d034438248",
     },
   ];
-  let [isOpen, setIsOpen] = useState(false);
+  const params = useParams();
+  const { cookies } = useAuth();
+  const [data, setData] = useState({});
 
-  return (
+  let [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setIsLoading(true);
+    async function fetchData() {
+      try {
+        const data = await getUserById(cookies.token, params.userId);
+        setData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+    setIsLoading(false);
+  }, []);
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className="flex flex-col bg-white rounded-lg shadow-lg w-7/12 px-2 my-4 border-2 justify-center max-h-screen m-auto">
       <div className="flex flex-row mx-4 border-b-2 items-center">
         <img
           className="w-40 h-40 mx-16 my-4 rounded-full shadow-lg"
-          src={
-            "https://media.licdn.com/dms/image/C5103AQHExyLqyBIe8w/profile-displayphoto-shrink_400_400/0/1567182680271?e=1688601600&v=beta&t=8_sbN0uH3zO4oK3qk9tNYtOjmMwOqlxxoURPGQd2BSc"
-          }
+          src={data.image}
         />
         <div className="flex flex-col m-4">
           <div className="flex flex-row items-center">
-            <div className="font-semibold text-lg p-2">Tushar Jain</div>
+            <div className="font-semibold text-lg p-2">{data.username}</div>
             <div className="text-xs mx-2  font-semibold p-2 rounded-lg bg-grayEF">
-              4th Year
+              {data.yearOfStudy}
             </div>
             <div className=" mx-2  font-semibold p-2 rounded-md bg-grayEF">
               <svg
@@ -89,49 +110,63 @@ function UserDetails() {
           </div>
           <div className=" px-2 flex flex-row items-center my-4">
             <div
-              className=" px-2 flex flex-row items-center my-4"
+              className=" pr-2 flex flex-row items-center my-4"
               onClick={() => setIsOpen(true)}
             >
-              <div className="mr-1 font-semibold">17</div>
+              <div className="mr-1 font-semibold">
+                {data.groupsJoined ? data.groupsJoined.length : 0}
+              </div>
               <div className="">following</div>
             </div>
             <div className=" px-2 flex flex-row items-center my-4">
-              <div className="ml-4 mr-1 font-semibold">8</div>
+              <div className="ml-4 mr-1 font-semibold">0</div>
               <div className="">projects</div>
             </div>
           </div>
-          <div className="px-2">tjain210@gmail.com</div>
-          <div className="px-2">Uttar Pradesh, Noida</div>
+            <div className="px-2">{data.email}</div>
+          <div className="px-2">
+            {data.city}, {data.state}
+          </div>
           <div className="px-2">
             <div className="font-bold">About</div>
-            <div>Student | Programmer 🧑‍💻 | Learner</div>
+            <div> {data.about}</div>
           </div>
         </div>
       </div>
-      <div className="mx-4 border-b-2">
-        <div className="m-2 font-bold">Skills</div>
-        <div className="flex flex-row flex-wrap mb-4">
-          {skills.map((skill) => (
-            <div className="bg-gray-400 p-2 m-2 rounded-lg text-white">
-              {skill}
-            </div>
-          ))}
+
+      {data.skills ? (
+        <div className="mx-4 border-b-2">
+          <div className="m-2 font-bold">Skills</div>
+          <div className="flex flex-row flex-wrap mb-4">
+            {data.skills.map((skill) => (
+              <div className="bg-gray-400 p-2 m-2 rounded-lg text-white">
+                {skill}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="mx-4 mb-4">
-        <div className="m-2 font-bold">Social/Portfolio</div>
-        <div className="flex flex-row flex-wrap ">
-          {socialLinks.map((socialLink) => (
-            <div className="flex flex-row items-center rounded-lg bg-grayEF m-2 p-2">
-              <img
-                className="w-4 h-4 mr-2 shadow-lg"
-                src={socialLink.platformImg}
-              />
-              <div className=" text-blue-500">{socialLink.platformLink}</div>
-            </div>
-          ))}
+      ) : (
+        <></>
+      )}
+
+      {data.socialLinks ? (
+        <div className="mx-4 mb-4">
+          <div className="m-2 font-bold">Social/Portfolio</div>
+          <div className="flex flex-row flex-wrap ">
+            {data.socialLinks.map((socialLink) => (
+              <div className="flex flex-row items-center rounded-lg bg-grayEF m-2 p-2">
+                <img
+                  className="w-4 h-4 mr-2 shadow-lg"
+                  src={socialLink.platformImg}
+                />
+                <div className=" text-blue-500">{socialLink.platformLink}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
       <JoinedGropuModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );

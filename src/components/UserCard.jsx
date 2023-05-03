@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/auth";
 
 function UserCard(props) {
   const { cookies } = useAuth();
-  const { itemData, setIsLoading } = props.itemData;
+  const { itemData, setIsLoading } = props;
 
   async function block(userId) {
     setIsLoading(true);
