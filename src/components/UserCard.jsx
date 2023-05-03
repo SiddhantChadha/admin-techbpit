@@ -28,22 +28,22 @@ function UserCard(props) {
   }
 
   return (
-    <div className="hover:bg-gray-200 flex shadow-md bg-white items-center w-full ">
+    <div className="hover:bg-gray-200 shadow-md bg-white items-center w-full grid grid-cols-5 gap-3">
       <Link to={`${itemData._id}`}>
-        <div className="flex flex-1 gap-3 px-6 py-4 font-normal text-gray-900">
-          <div className="relative h-10 w-10">
+        <div className="flex flex-col px-6 py-4 font-normal text-gray-900 items-center">
+          <div className="h-10 w-10">
             <img
               className="h-full w-full rounded-full object-cover object-center"
               src={itemData.image}
             />
           </div>
-          <div className="text-sm">
+          <div className="text-sm flex flex-col items-center">
             <div className="font-medium text-gray-700">{itemData.username}</div>
             <div className="text-gray-400">{itemData.email}</div>
           </div>
         </div>
       </Link>
-      <div className="px-6 py-4 flex-1">
+      <div className="px-6 py-4 text-center">
         {itemData.isBlocked ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
             <span className="h-1.5 w-1.5 rounded-full bg-red-600"></span>
@@ -56,9 +56,9 @@ function UserCard(props) {
           </span>
         )}
       </div>
-      <div className="px-6 py-4 flex-1 text-center">{itemData.yearOfStudy}</div>
+      <div className="px-6 py-4 text-center">{itemData.yearOfStudy}</div>
       <div className="px-6 py-4">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {itemData.skills.map((obj) => {
             return (
               <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
@@ -68,8 +68,8 @@ function UserCard(props) {
           })}
         </div>
       </div>
-      <div className="px-6 py-4 flex-1">
-        <div className="flex justify-center gap-4">
+      <div className="px-6 py-4">
+        <div className="flex justify-center gap-2 flex-wrap">
           {itemData.isBlocked ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
