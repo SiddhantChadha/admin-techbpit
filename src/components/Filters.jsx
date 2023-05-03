@@ -1,10 +1,10 @@
-export default function Filters({ appliedFilter, onFilterApplied,heading}) {
+export default function Filters({ appliedFilter, onFilterApplied, heading }) {
   return (
     <div className="w-7/12">
+      <span className="font-semibold">{heading}</span>
       {appliedFilter.map((obj) => {
         return (
           <div className="bg-white">
-            <span className="font-semibold">{heading}</span>
             <input
               type="checkbox"
               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"

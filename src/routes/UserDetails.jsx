@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import JoinedGropuModal from "../components/JoinedGropuModal";
 
 function UserDetails() {
   const skills = [
@@ -52,6 +53,8 @@ function UserDetails() {
       _id: "644e6c1bf4fe71d034438248",
     },
   ];
+  let [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-lg w-7/12 px-2 my-4 border-2 justify-center max-h-screen m-auto">
       <div className="flex flex-row mx-4 border-b-2 items-center">
@@ -85,10 +88,17 @@ function UserDetails() {
             </div>
           </div>
           <div className=" px-2 flex flex-row items-center my-4">
-            <div className="mr-1 font-semibold">17</div>
-            <div className="">following</div>
-            <div className="ml-4 mr-1 font-semibold">8</div>
-            <div className="">projects</div>
+            <div
+              className=" px-2 flex flex-row items-center my-4"
+              onClick={() => setIsOpen(true)}
+            >
+              <div className="mr-1 font-semibold">17</div>
+              <div className="">following</div>
+            </div>
+            <div className=" px-2 flex flex-row items-center my-4">
+              <div className="ml-4 mr-1 font-semibold">8</div>
+              <div className="">projects</div>
+            </div>
           </div>
           <div className="px-2">tjain210@gmail.com</div>
           <div className="px-2">Uttar Pradesh, Noida</div>
@@ -122,6 +132,7 @@ function UserDetails() {
           ))}
         </div>
       </div>
+      <JoinedGropuModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 }

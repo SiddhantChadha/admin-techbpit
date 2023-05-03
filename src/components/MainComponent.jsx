@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import PostsSearchBar from "./PostsSearchBar";
 import PostDetails from "./PostDetails";
+import GroupsJoinedList from "./GroupsJoinedList";
 
 function MainComponent() {
   return (

@@ -6,6 +6,7 @@ import PostsSearchBar from "../components/PostsSearchBar";
 import PaginationBar from "../components/PaginationBar";
 import Filters from "../components/Filters";
 import PostDetailModal from "../components/PostDetailModal";
+import { isSevenDaysAgo, isThirtyDaysAgo } from "../utils/DateTimeUtils";
 
 const DATA = [
   {
@@ -266,8 +267,8 @@ const postFilters = [
   { value: "Community", checked: false, type: "communityPost" },
 ];
 const timeFilters = [
-  { value: "1 week ago", checked: false },
-  { value: "1 month ago", checked: false },
+  { value: "1 week ago", checked: false, type: 7 },
+  { value: "1 month ago", checked: false, type: 30 },
 ];
 
 function Posts() {
@@ -287,18 +288,22 @@ function Posts() {
   const onSearchClicked = (query) => {
     setActivePage((activePage) => 0);
     setSearchQuery((searchQuery) => query);
-    setFilteredData(filterData(DATA, query, appliedPostFilter));
+    setFilteredData(
+      filterData(DATA, query, appliedPostFilter, appliedTimeFilter)
+    );
   };
 
   const onPostFilterApplied = (newState) => {
     console.log(newState);
     setActivePage((activePage) => 0);
     setAppliedPostFilter((appliedPostFilter) => newState);
-    setFilteredData(filterData(DATA, searchQuery, newState));
+    setFilteredData(filterData(DATA, searchQuery, newState, appliedTimeFilter));
   };
 
   const onTimeFilterApplied = (newState) => {
     setActivePage((activePage) => 0);
+    setAppliedTimeFilter((appliedTimeFilter) => newState);
+    setFilteredData(filterData(DATA, searchQuery, appliedPostFilter, newState));
   };
 
   return (
@@ -320,17 +325,20 @@ function Posts() {
           pageResults={paginatedList.length}
         />
       </div>
-      <div className="h-fit w-2/12 flex flex-col items-center bg-white py-4">
-        <Filters
-          appliedFilter={appliedPostFilter}
-          onFilterApplied={onPostFilterApplied}
-          heading="Post Type"
-        />
-        <Filters
-          appliedFilter={appliedTimeFilter}
-          onFilterApplied={onTimeFilterApplied}
-          heading="Post Time"
-        />
+      <div className="flex flex-col max-h-screen w-2/12 justify-center">
+        <div className="flex h-fit w-full flex-col items-center bg-white rounded-lg self-center">
+          <div className="mb-2 font-bold">Filters</div>
+          <Filters
+            appliedFilter={appliedPostFilter}
+            onFilterApplied={onPostFilterApplied}
+            heading="Post Type"
+          />
+          <Filters
+            appliedFilter={appliedTimeFilter}
+            onFilterApplied={onTimeFilterApplied}
+            heading="Post Time"
+          />
+        </div>
       </div>
       <PostDetailModal open={open} setOpen={setOpen} />
     </div>
@@ -359,10 +367,11 @@ function getMaximumNumberOfPages(listSize, itemsPerPage) {
   }
 }
 
-function filterData(data, query, filter) {
+function filterData(data, query, filter, timeFilter) {
   let filterData = getSearchedData(data, query);
   console.log("search", filterData.length);
   filterData = getPostFilteredData(filterData, filter);
+  filterData = getTimeFilteredData(filterData, timeFilter);
   return filterData;
 }
 
@@ -382,9 +391,20 @@ function getPostFilteredData(data, filter) {
 }
 
 function getTimeFilteredData(data, filter) {
-  const filteredData = data.filter((o) => {
-    return o.timestamp.toLowerCase().includes(filter);
+  var filteredData = data;
+  filter.map((f) => {
+    if (f.checked && f.type == 7) {
+      filteredData = filteredData.filter((itemData) => {
+        isSevenDaysAgo(itemData.timestamp);
+      });
+    }
+    if (f.checked && f.type == 30) {
+      filteredData = filteredData.filter((itemData) => {
+        isThirtyDaysAgo(itemData.timestamp);
+      });
+    }
   });
+  if (filter.every((f) => !f.checked)) return data;
   return filteredData;
 }
 
