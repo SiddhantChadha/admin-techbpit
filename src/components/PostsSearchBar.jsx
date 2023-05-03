@@ -4,7 +4,7 @@ function PostsSearchBar(props) {
   const [val, setVal] = useState("");
   const onSearchClicked = props.onSearchClicked;
   return (
-    <div className="flex items-center mt-4 mb-4 w-6/12 justify-center">
+    <div className="flex items-center mt-4 mb-4 w-6/12 justify-center ">
       <div className="flex space-x-1 w-full">
         <input
           type="text"
