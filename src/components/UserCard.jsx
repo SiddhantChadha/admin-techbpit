@@ -1,21 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function UserCard(props) {
   const itemData = props.itemData;
   return (
     <div className="hover:bg-red-50 flex shadow-md bg-white items-center w-full ">
-      <div className="flex gap-3 px-6 py-4 font-normal text-gray-900">
-        <div className="relative h-10 w-10">
-          <img
-            className="h-full w-full rounded-full object-cover object-center"
-            src={itemData.image}
-          />
+      <Link to={`${itemData._id}`}>
+        <div className="flex gap-3 px-6 py-4 font-normal text-gray-900">
+          <div className="relative h-10 w-10">
+            <img
+              className="h-full w-full rounded-full object-cover object-center"
+              src={itemData.image}
+            />
+          </div>
+          <div className="text-sm">
+            <div className="font-medium text-gray-700">{itemData.username}</div>
+            <div className="text-gray-400">{itemData.email}</div>
+          </div>
         </div>
-        <div className="text-sm">
-          <div className="font-medium text-gray-700">{itemData.username}</div>
-          <div className="text-gray-400">{itemData.email}</div>
-        </div>
-      </div>
+      </Link>
       <div className="px-6 py-4">
         <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
           <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>

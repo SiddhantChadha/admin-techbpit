@@ -7,6 +7,7 @@ module.exports = {
         primaryBlue: "#2E3094",
         grayEF: "#EFEFEF",
         gray1D2226: "#1D2226",
+        primaryRed: "#F14440",
       },
       fontSize: {
         xss: ".65rem",

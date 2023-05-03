@@ -22,6 +22,7 @@ function GroupCard(props) {
               View Details
             </button>
           </Link>
+        
         </div>
       </div>
     </div>
