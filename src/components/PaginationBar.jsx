@@ -10,7 +10,7 @@ export default function PaginationBar(props) {
   const pageResults = props.pageResults;
 
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full ">
+    <div className="absolute bottom-0 flex items-center justify-end border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full h-3/12">
       <div className="flex flex-1 justify-between sm:hidden">
         <span
           onClick={() =>

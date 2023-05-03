@@ -275,7 +275,7 @@ function Posts() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activePage, setActivePage] = useState(0);
   const [filteredData, setFilteredData] = useState(DATA);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
   const paginatedList = getItemsInPage(filteredData, itemsPerPage, activePage);
   const [appliedPostFilter, setAppliedPostFilter] = useState(postFilters);
   const [appliedTimeFilter, setAppliedTimeFilter] = useState(timeFilters);
@@ -307,40 +307,42 @@ function Posts() {
   };
 
   return (
-    <div className="flex flex-row">
-      <div className="flex flex-col items-center max-h-screen justify-between w-10/12">
-        <PostsSearchBar onSearchClicked={onSearchClicked} />
-        <div
-          className="flex flex-col items-center overflow-y-auto w-8/12"
-          id="journal-scroll"
-        >
-          {paginatedList.map((item) => getPostType(item, setOpen))}
+    <div className="flex flex-col max-h-screen min-h-screen relative" id="dws">
+      <div className="flex flex-row overflow-y-auto">
+        <div className="flex flex-col items-center justify-between w-7/12 ml-40">
+          <PostsSearchBar onSearchClicked={onSearchClicked} />
+          <div
+            className="flex flex-col items-center	overflow-y-auto"
+            id="journal-scroll"
+          >
+            {paginatedList.map((item) => getPostType(item, setOpen))}
+          </div>
         </div>
-        <PaginationBar
-          activePage={activePage}
-          setActivePage={setActivePage}
-          maxPage={getMaximumNumberOfPages(filteredData.length, itemsPerPage)}
-          itemsPerPage={itemsPerPage}
-          totalResults={filteredData.length}
-          pageResults={paginatedList.length}
-        />
-      </div>
-      <div className="flex flex-col max-h-screen w-2/12 justify-center">
-        <div className="flex h-fit w-full flex-col items-center bg-white rounded-lg self-center">
+        <div className="flex flex-col grow mt-6 items-center pr-4">
           <div className="mb-2 font-bold">Filters</div>
-          <Filters
-            appliedFilter={appliedPostFilter}
-            onFilterApplied={onPostFilterApplied}
-            heading="Post Type"
-          />
-          <Filters
-            appliedFilter={appliedTimeFilter}
-            onFilterApplied={onTimeFilterApplied}
-            heading="Post Time"
-          />
+          <div className="flex w-8/12 p-4 flex-col items-center bg-white rounded-lg self-center mx-auto">
+            <Filters
+              appliedFilter={appliedPostFilter}
+              onFilterApplied={onPostFilterApplied}
+              heading="Post Type"
+            />
+            <Filters
+              appliedFilter={appliedTimeFilter}
+              onFilterApplied={onTimeFilterApplied}
+              heading="Post Time"
+            />
+          </div>
         </div>
+        <PostDetailModal open={open} setOpen={setOpen} />
       </div>
-      <PostDetailModal open={open} setOpen={setOpen} />
+      <PaginationBar
+        activePage={activePage}
+        setActivePage={setActivePage}
+        maxPage={getMaximumNumberOfPages(filteredData.length, itemsPerPage)}
+        itemsPerPage={itemsPerPage}
+        totalResults={filteredData.length}
+        pageResults={paginatedList.length}
+      />
     </div>
   );
 }
