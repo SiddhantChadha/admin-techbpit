@@ -13,8 +13,8 @@ export const getAllUsers = async (token) => {
   return data;
 };
 
-export const blockUser = async (token, userId) => {
-  const result = await fetch(BASE_URL + "/delete/" + userId, {
+export const blockUser = async (token,userId) => {
+  const result = await fetch(BASE_URL + "/user/delete/" + userId, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -26,8 +26,8 @@ export const blockUser = async (token, userId) => {
   return data;
 };
 
-export const unblockUser = async (token, userId) => {
-  const result = await fetch(BASE_URL + "/unblock/" + userId, {
+export const unblockUser = async (token,userId) => {
+  const result = await fetch(BASE_URL + "/user/unblock/" + userId, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
