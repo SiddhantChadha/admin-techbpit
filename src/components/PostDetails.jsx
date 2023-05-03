@@ -2,7 +2,7 @@ import React from "react";
 
 function PostDetails() {
   return (
-    <div className="flex bg-white rounded-lg shadow-lg w-7/12 h-4/6 px-2 m-auto">
+    <div className="flex bg-white rounded-lg shadow-lg w-full h-100 px-2 m-auto">
       <img
         className=" my-4 w-1/2 object-contain mx-2 bg-gray1D2226 rounded-lg px-4"
         src={
@@ -25,7 +25,23 @@ function PostDetails() {
           contest as we'll be shortlisting the candidates on the basis of their
           score in this contest. 😊😊𝗣.𝗦. This event happens only twice a year
           and you are invited to be a part of the best Global Coding Contest. ✨
-          Team NSCC BPIT code your way to success 💻
+          Team NSCC BPIT code your way to success 💻 Team NSCC BPIT code your
+          way to success 💻 Team NSCC BPIT code your way to success 💻 Team NSCC
+          BPIT code your way to success 💻 Team NSCC BPIT code your way to
+          success 💻 Team NSCC BPIT code your way to success 💻 Team NSCC BPIT
+          code your way to success 💻 Team NSCC BPIT code your way to success 💻
+          Team NSCC BPIT code your way to success 💻 Team NSCC BPIT code your
+          way to success 💻 Team NSCC BPIT code your way to success 💻 Team NSCC
+          BPIT code your way to success 💻 Team NSCC BPIT code your way to
+          success 💻 Team NSCC BPIT code your way to success 💻 Team NSCC BPIT
+          code your way to success 💻 Team NSCC BPIT code your way to success 💻
+          Team NSCC BPIT code your way to success 💻 Team NSCC BPIT code your
+          way to success 💻 Team NSCC BPIT code your way to success 💻 Team NSCC
+          BPIT code your way to success 💻 Team NSCC BPIT code your way to
+          success 💻 Team NSCC BPIT code your way to success 💻 Team NSCC BPIT
+          code your way to success 💻 Team NSCC BPIT code your way to success 💻
+          Team NSCC BPIT code your way to success 💻 Team NSCC BPIT code your
+          way to success 💻 Team NSCC BPIT code your way to success 💻
         </div>
         <div className="flex flex-row items-center">
           <div className="font-semibold mr-2">Organizer:</div>

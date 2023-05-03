@@ -5,6 +5,7 @@ import ResourcePost from "../components/ResourcePost";
 import PostsSearchBar from "../components/PostsSearchBar";
 import PaginationBar from "../components/PaginationBar";
 import Filters from "../components/Filters";
+import PostDetailModal from "../components/PostDetailModal";
 
 const DATA = [
   {
@@ -277,6 +278,7 @@ function Posts() {
   const paginatedList = getItemsInPage(filteredData, itemsPerPage, activePage);
   const [appliedPostFilter, setAppliedPostFilter] = useState(postFilters);
   const [appliedTimeFilter, setAppliedTimeFilter] = useState(timeFilters);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -307,7 +309,7 @@ function Posts() {
           className="flex flex-col items-center overflow-y-auto w-8/12"
           id="journal-scroll"
         >
-          {paginatedList.map((item) => getPostType(item))}
+          {paginatedList.map((item) => getPostType(item, setOpen))}
         </div>
         <PaginationBar
           activePage={activePage}
@@ -330,14 +332,17 @@ function Posts() {
           heading="Post Time"
         />
       </div>
+      <PostDetailModal open={open} setOpen={setOpen} />
     </div>
   );
 }
-function getPostType(item) {
-  if (item.postType === "resourcePost") return <ResourcePost itemData={item} />;
+function getPostType(item, setOpen) {
+  if (item.postType === "resourcePost")
+    return <ResourcePost itemData={item} onClick={() => setOpen(true)} />;
   if (item.postType === "communityPost")
-    return <CommunityPost itemData={item} />;
-  if (item.postType === "eventPost") return <EventPost itemData={item} />;
+    return <CommunityPost itemData={item} onClick={() => setOpen(true)} />;
+  if (item.postType === "eventPost")
+    return <EventPost itemData={item} onClick={() => setOpen(true)} />;
 }
 
 function getItemsInPage(DATA, itemsPerPage, pageNumber) {

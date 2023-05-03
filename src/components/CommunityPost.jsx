@@ -3,8 +3,12 @@ import { timestampToAgoFormat } from "../utils/DateTimeUtils";
 
 function CommunityPost(props) {
   const itemData = props.itemData;
+  const onClick = props.onClick;
   return (
-    <div className="my-12 bg-white mx-5 p-5 rounded-lg shadow-md w-8/12">
+    <div
+      className="my-12 bg-white mx-5 p-5 rounded-lg shadow-md w-8/12"
+      onClick={() => onClick()}
+    >
       <div className="flex items-center">
         <img
           className="h-10 w-10 rounded-full object-cover object-center"

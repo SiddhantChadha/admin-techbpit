@@ -3,8 +3,13 @@ import { isoFormatToDate, isoFormatToMonth } from "../utils/DateTimeUtils";
 
 function EventPost(props) {
   const itemData = props.itemData;
+  const onClick = props.onClick;
+
   return (
-    <div className="my-12 bg-white mx-5 p-5 rounded-lg shadow-md w-8/12">
+    <div
+      className="my-12 bg-white mx-5 p-5 rounded-lg shadow-md w-8/12"
+      onClick={() => onClick()}
+    >
       <div className="flex">
         <img
           className="h-10 w-10 rounded-full object-cover object-center"
