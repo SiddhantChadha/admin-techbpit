@@ -2,12 +2,33 @@ import React from "react";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Upload from "./Upload";
+import { createGroup } from "../api/GroupAPI";
+import { useAuth } from "../hooks/auth";
+import Loader from "./Loader";
 
 function CreateGroupModal({ open, setOpen }) {
   const [cloudinaryImage, setCloudinaryImage] = useState(
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcnTCrjKmRCJDwebeZdr5iVQ_9QFHwtLEJsQ&usqp=CAU"
   );
+
+  const [groupName,setGroupName] = useState();
+  const [description,setDescription] = useState();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const { cookies } = useAuth();
+
+  async function fetchData() {
+    setIsLoading(true);
+    try {
+       await createGroup(cookies.token,groupName,cloudinaryImage,description);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
+  }
+
   return (
+    isLoading?<Loader />:
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
         <Transition.Child
@@ -59,6 +80,10 @@ function CreateGroupModal({ open, setOpen }) {
                   <Upload
                     cloudinaryImage={cloudinaryImage}
                     setCloudinaryImage={setCloudinaryImage}
+                    groupName={groupName}
+                    setGroupName={setGroupName}
+                    description={description}
+                    setDescription={setDescription}
                   />
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
@@ -66,6 +91,7 @@ function CreateGroupModal({ open, setOpen }) {
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-primaryBlue px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                     onClick={() => {
+                      fetchData();
                       setOpen(false);
                     }}
                   >

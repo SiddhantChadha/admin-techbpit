@@ -4,6 +4,10 @@ import ResourcePost from "../components/ResourcePost";
 import EventPost from "../components/EventPost";
 import CommunityPost from "../components/CommunityPost";
 import DetailModal from "../components/DetailModal";
+import { useEffect } from "react";
+import Loader from "../components/Loader";
+import { getGroupDetail } from "../api/GroupAPI";
+import { useAuth } from "../hooks/auth";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -293,7 +297,25 @@ const postData = [
 ];
 
 function GroupDetail() {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [data,setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const { cookies } = useAuth();
+
+  useEffect(()=>{
+    setIsLoading(true);
+    async function fetchData() {
+      try {
+        const data = await getGroupDetail(cookies.token,);
+        setData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData()
+    setIsLoading(false);
+  })
+
 
   function closeModal() {
     setIsOpen(false);
@@ -304,6 +326,7 @@ function GroupDetail() {
   }
 
   return (
+    isLoading?<Loader />:
     <div
       className="flex flex-col items-center max-h-screen overflow-auto"
       id="journal-scroll"

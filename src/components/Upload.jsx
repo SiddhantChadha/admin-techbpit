@@ -4,6 +4,8 @@ function Upload(props) {
   const cloudinaryImage = props.cloudinaryImage;
   const setCloudinaryImage = props.setCloudinaryImage;
 
+  const { groupName,setGroupName,description,setDescription } = props;
+
   const handleUpload = async (uploadFile) => {
     const formData = new FormData();
     formData.append("file", uploadFile);
@@ -53,18 +55,22 @@ function Upload(props) {
         />
       </div>
       <input
-        id="email"
+        id="groupName"
         type="text"
-        name="email"
+        name="groupName"
         class="m-4 text-sm placeholder-gray-500 px-4 rounded-lg border border-gray-400 py-2 focus:outline-none focus:border-blue-400 w-8/12"
         placeholder="Group name"
+        value={groupName}
+        onChange={(e)=>setGroupName(e.target.value)}
       />
       <input
-        id="email"
+        id="description"
         type="text"
-        name="email"
+        name="description"
         class="m-4 text-sm placeholder-gray-500 px-4 rounded-lg border border-gray-400 py-2 focus:outline-none focus:border-blue-400 w-8/12"
         placeholder="Description"
+        value={description}
+        onChange={(e)=>setDescription(e.target.value)}
       />
     </div>
   );

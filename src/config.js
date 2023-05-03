@@ -1,0 +1,1 @@
+export const BASE_URL = "https://techbpit-tjhkw.run-ap-south1.goorm.site";
