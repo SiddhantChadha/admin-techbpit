@@ -1,26 +1,20 @@
-import React, { useState } from "react";
-import Axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function Upload() {
-  //   const [uploadFile, setUploadFile] = useState("");
+  const [uploadFile, setUploadFile] = useState("");
   const [cloudinaryImage, setCloudinaryImage] = useState("");
 
-  const handleUpload = (uploadFile) => {
+  const handleUpload = async (uploadFile) => {
     const formData = new FormData();
     formData.append("file", uploadFile);
     formData.append("upload_preset", "admin-techbpit");
 
-    Axios.post(
+    const resp = await fetch(
       "https://api.cloudinary.com/v1_1/dmigta0dz/image/upload",
-      formData
-    )
-      .then((response) => {
-        console.log(response);
-        setCloudinaryImage(response.data.secure_url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      { method: "POST", body: formData }
+    );
+    const data = await resp.json();
+    setCloudinaryImage(data.secure_url);
   };
 
   return (
@@ -30,8 +24,8 @@ function Upload() {
           <input
             type="file"
             accept="image/x-png,image/jpeg"
-            onChange={(event) => {
-              handleUpload(event.target.files[0]);
+            onChange={async (event) => {
+              await handleUpload(event.target.files[0]);
             }}
           />
         </div>
