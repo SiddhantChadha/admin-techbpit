@@ -23,7 +23,7 @@ function Groups() {
     }
     fetchData()
     setIsLoading(false);
-  });
+  },[]);
 
   return isLoading ? (
     <Loader />

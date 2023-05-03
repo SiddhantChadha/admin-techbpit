@@ -1,10 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { blockUser, unblockUser } from "../api/UserAPI";
+import { useAuth } from "../hooks/auth";
 
 function UserCard(props) {
-  const itemData = props.itemData;
+  const { cookies } = useAuth();
+  const { itemData, setIsLoading } = props.itemData;
+
+  async function block(userId) {
+    setIsLoading(true);
+    try {
+      await blockUser(cookies.token, userId);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
+  }
+
+  async function unblock(userId) {
+    setIsLoading(true);
+    try {
+      await unblockUser(cookies.token, userId);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoading(false);
+  }
+
   return (
-    <div className="hover:bg-red-50 flex shadow-md bg-white items-center w-full ">
+    <div className="hover:bg-gray-200 flex shadow-md bg-white items-center w-full ">
       <Link to={`${itemData._id}`}>
         <div className="flex gap-3 px-6 py-4 font-normal text-gray-900">
           <div className="relative h-10 w-10">
@@ -20,44 +44,61 @@ function UserCard(props) {
         </div>
       </Link>
       <div className="px-6 py-4">
-        <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
-          Active
-        </span>
+        {itemData.isBlocked ? (
+          <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+            Blocked
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+            Active
+          </span>
+        )}
       </div>
-      <div className="px-6 py-4">4th Year</div>
+      <div className="px-6 py-4">{itemData.yearOfStudy}</div>
       <div className="px-6 py-4">
         <div className="flex gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
-            Design
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600">
-            Product
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-600">
-            Develop
-          </span>
+          {itemData.skills.map((obj) => {
+            return (
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
+                {obj}
+              </span>
+            );
+          })}
         </div>
       </div>
       <div className="px-6 py-4">
         <div className="flex justify-end gap-4">
-          <a x-data="{ tooltip: 'Delete' }" href="#">
+          {itemData.isBlocked ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="h-6 w-6"
-              x-tooltip="tooltip"
+              fill="currentColor"
+              className="w-6 h-6 hover:text-green-500"
+              onClick={async () => await unblock(itemData._id)}
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                fill-rule="evenodd"
+                d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z"
+                clip-rule="evenodd"
               />
             </svg>
-          </a>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6 hover:text-red-500"
+              onClick={async () => await block(itemData._id)}
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          )}
         </div>
       </div>
     </div>
