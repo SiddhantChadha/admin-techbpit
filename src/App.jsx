@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes,Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./routes/Login";
 import ProtectRoutes from "./hooks/ProtectRoutes.js";
 import Posts from "./routes/Posts";
@@ -11,8 +11,7 @@ import UserDetails from "./routes/UserDetails";
 function App() {
   return (
     <Routes>
-      
-      <Route path="/login" element={<Login />} />
+      <Route path="login" element={<Login />} />
 
       <Route path="/" element={<ProtectRoutes />}>
         <Route path="posts" element={<Posts />} />
@@ -21,7 +20,6 @@ function App() {
         <Route path="groups/:groupdId" element={<GroupDetail />} />
         <Route path="users/:userId" element={<UserDetails />} />
       </Route>
-      
     </Routes>
   );
 }

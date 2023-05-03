@@ -1,10 +1,13 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useAuth } from "../hooks/auth";
 
 function LogoutModal({ open, setOpen }) {
+  const { logout } = useAuth();
+
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={()=>setOpen(false)}>
+      <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -67,7 +70,10 @@ function LogoutModal({ open, setOpen }) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      logout();
+                      setOpen(false);
+                    }}
                   >
                     Logout
                   </button>

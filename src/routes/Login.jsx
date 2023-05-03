@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import Loader from "../components/Loader";
 import { useAuth } from "../hooks/auth";
@@ -9,19 +10,21 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {login} = useAuth();
+  const { login, cookies } = useAuth();
 
   const handleSubmit = async () => {
     try {
-      //setLoading(true);
-      await login(email,password);
+      setLoading(true);
+      await login(email, password);
     } catch (err) {
       console.log(err);
     }
-    //setLoading(false);
+    setLoading(false);
   };
 
-  return loading ? (
+  return cookies.token ? (
+    <Navigate to="/" exact />
+  ) : loading ? (
     <Loader />
   ) : (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-300">

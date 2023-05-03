@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import logo from "../assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import LogoutModal from "./LogoutModal";
-import {useAuth} from '../hooks/auth'
+import { useAuth } from "../hooks/auth";
 
 function Sidebar() {
   const [open, setOpen] = useState(false);
-  const {cookies} = useAuth();
+  const { cookies } = useAuth();
 
   return (
     <div className=" flex flex-col top-0 left-0 w-64 bg-white min-h-full border-r text-gray-800 justify-between">
