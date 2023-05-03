@@ -13,38 +13,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const data = {
-  _id: "63add2285086f6fca8576f0c",
-  groupName: "NodeJs",
-  image: "https://www.javatpoint.com/js/nodejs/images/node-js-tutorial.png",
-  description:
-    "Nodejs Community is a gathering space for the Node.js community; a place for Node news, resources, tutorials, tips and friendship.",
-  moderators: [
-    {
-      _id: "63add416bc3a132d96ce6cb2",
-      username: "Siddhant",
-      image:
-        "https://toppng.com/public/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
-    },
-  ],
-  usersJoined: [
-    {
-      _id: "63add1dc5086f6fca8576f01",
-      username: "Tushar Jain",
-      image:
-        "http://res.cloudinary.com/dmigta0dz/image/upload/v1673687173/ts5pi0lvpocxs5wykesr.jpg",
-    },
-    {
-      _id: "63c63365da36e5e81dc6a8a1",
-      username: "Manan Gaur",
-      image:
-        "https://toppng.com/public/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
-    },
-  ],
-  canEdit: false,
-  isJoined: true,
-};
-
 const postData = [
   {
     _id: "63c3fb6f6b6759362cd85e68",
@@ -298,7 +266,7 @@ const postData = [
 
 function GroupDetail() {
   const [isOpen, setIsOpen] = useState(false);
-  const [data,setData] = useState();
+  const [data,setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { cookies } = useAuth();
 
@@ -306,7 +274,7 @@ function GroupDetail() {
     setIsLoading(true);
     async function fetchData() {
       try {
-        const data = await getGroupDetail(cookies.token,);
+        const data = await getGroupDetail(cookies.token,"63add2285086f6fca8576f0c");
         setData(data);
       } catch (err) {
         console.log(err);
@@ -335,22 +303,23 @@ function GroupDetail() {
       <div className="w-2/3">
         <div className="flex items-center justify-center w-full">
           <img
-            src={data.image}
+            src={(data.image)?data.image:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Example_image.svg/600px-Example_image.svg.png"}
+            alt="logo"
             className="rounded-full w-16 h-16 object-contain border border-black"
           />
 
           <div className="flex flex-col m-10 w-1/2">
-            <span className="text-3xl font-semibold">{data.groupName}</span>
+            <span className="text-3xl font-semibold">{(data.groupName)?data.groupName:""}</span>
             <div className="flex flex-row items-center my-4">
               <div className="flex" onClick={openModal}>
                 <div className="mr-1 font-semibold">
-                  {data.moderators.length}
+                  {(data.moderators.length)?data.moderators.length:0}
                 </div>
                 <div>Mentors</div>
               </div>
               <div className="flex" onClick={openModal}>
                 <div className="ml-4 mr-1 font-semibold">
-                  {data.usersJoined.length}
+                  {(data.usersJoined.length)?data.usersJoined.length:0}
                 </div>
                 <div>Participants</div>
               </div>
