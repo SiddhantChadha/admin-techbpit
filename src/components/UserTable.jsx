@@ -46,7 +46,7 @@ function UserTable({ setIsLoading, fetchData, data }) {
           Action
         </div>
       </div>
-      <div className="divide-y divide-gray-100 border-t border-gray-100">
+      <div className="divide-y divide-gray-100 border-t border-gray-100 overflow-y-scroll">
         {data.map((item) => (
           <UserCard
             itemData={item}

@@ -278,19 +278,21 @@ const users = [
   },
 ];
 function UserList({ userList }) {
+  console.log(userList);
+
   return (
-    <div className=" flex justify-center w-full m-auto h-96 ">
-      <div
-        className="w-full grid grid-cols-2 gap-6 overflow-y-auto"
-        id="journal-scroll"
-      >
-        {userList.map((item) => (
-          <div className="flex flex-row items-center">
-            <img class="w-12 h-12 my-3 rounded-full" src={item.image} />
-            <div className="mx-2 font-semibold">{item.username}</div>
-          </div>
-        ))}
-      </div>
+    <div
+      className="w-full m-auto h-96 grid grid-cols-2 gap-6 overflow-y-auto"
+      id="journal-scroll"
+    >
+      {userList.map((item) => (
+        <div className="flex max-h-16 items-center">
+          <img class="w-12 h-12 my-3 rounded-full" src={item.image} />
+          <span className="mx-2 font-semibold justify-center overflow-clip line-clamp-2 text-start">
+            {item.username}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
