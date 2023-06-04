@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import UserList from "../components/UserList";
 import GroupsJoinedList from "./GroupsJoinedList";
 
-function DetailModal({ isOpen, setIsOpen, userList }) {
+function DetailModal({ isOpen, setIsOpen, userList, title }) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -39,7 +39,7 @@ function DetailModal({ isOpen, setIsOpen, userList }) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Participants
+                  {title}
                 </Dialog.Title>
                 <div className="mt-2">
                   <UserList userList={userList} />

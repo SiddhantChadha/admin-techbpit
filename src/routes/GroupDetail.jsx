@@ -14,6 +14,7 @@ import { getGroupPosts } from "../api/PostsAPI";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+let title = "";
 
 function GroupDetail() {
   const params = useParams();
@@ -64,7 +65,12 @@ function GroupDetail() {
       className="flex flex-col items-center max-h-screen overflow-auto"
       id="journal-scroll"
     >
-      <DetailModal isOpen={isOpen} setIsOpen={setIsOpen} userList={userList} />
+      <DetailModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        userList={userList}
+        title={title}
+      />
       <div className="w-2/3">
         <div className="flex items-center justify-center w-full">
           <img
@@ -85,6 +91,7 @@ function GroupDetail() {
               <div
                 className="flex"
                 onClick={() => {
+                  title = "Mentors";
                   setUserList(data.moderators);
                   openModal();
                 }}
@@ -97,6 +104,7 @@ function GroupDetail() {
               <div
                 className="flex"
                 onClick={() => {
+                  title = "Participants";
                   setUserList(data.usersJoined);
                   openModal();
                 }}
