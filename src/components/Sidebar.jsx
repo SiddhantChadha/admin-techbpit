@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import logo from "../assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import LogoutModal from "./LogoutModal";
-import {useAuth} from '../hooks/auth'
+import { useAuth } from "../hooks/auth";
 
 function Sidebar() {
   const [open, setOpen] = useState(false);
-  const {cookies} = useAuth();
+  const { cookies } = useAuth();
 
   return (
     <div className=" flex flex-col top-0 left-0 w-64 bg-white min-h-full border-r text-gray-800 justify-between">
@@ -26,37 +26,6 @@ function Sidebar() {
                 </div>
               </div>
             </li>
-            <li>
-              <NavLink
-                to={`groups`}
-                className={({ isActive, isPending }) =>
-                  isActive
-                    ? "relative flex flex-row items-center h-11 focus:outline-none bg-gray-50  text-gray-800 border-l-4 border-indigo-500 pr-6"
-                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                }
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z"
-                    />
-                  </svg>
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Groups
-                </span>
-              </NavLink>
-            </li>
-
             <li>
               <NavLink
                 to={`posts`}
@@ -84,6 +53,37 @@ function Sidebar() {
                 </span>
                 <span className="ml-2 text-sm tracking-wide truncate">
                   Posts
+                </span>
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to={`groups`}
+                className={({ isActive, isPending }) =>
+                  isActive
+                    ? "relative flex flex-row items-center h-11 focus:outline-none bg-gray-50  text-gray-800 border-l-4 border-indigo-500 pr-6"
+                    : "relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                }
+              >
+                <span className="inline-flex justify-center items-center ml-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z"
+                    />
+                  </svg>
+                </span>
+                <span className="ml-2 text-sm tracking-wide truncate">
+                  Groups
                 </span>
               </NavLink>
             </li>

@@ -6,7 +6,11 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [cookies, setCookies, removeCookie] = useCookies(["token","name","image"]);
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
 
   const login = async (email, password) => {
     const res = await fetch(
@@ -21,9 +25,15 @@ export const UserProvider = ({ children }) => {
     );
 
     const data = await res.json();
-    setCookies("token", data.access_token,{expires: new Date(Date.now()+86400000)});
-    setCookies("name", data.username,{expires: new Date(Date.now()+86400000)});
-    setCookies("image", data.image,{expires: new Date(Date.now()+86400000)});
+    setCookies("token", data.access_token, {
+      expires: new Date(Date.now() + 86400000),
+    });
+    setCookies("name", data.username, {
+      expires: new Date(Date.now() + 86400000),
+    });
+    setCookies("image", data.image, {
+      expires: new Date(Date.now() + 86400000),
+    });
   };
 
   const logout = () => {

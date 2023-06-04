@@ -1,31 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { blockUser, unblockUser } from "../api/UserAPI";
 import { useAuth } from "../hooks/auth";
 
 function UserCard(props) {
   const { cookies } = useAuth();
-  const { itemData, setIsLoading } = props;
-
-  async function block(userId) {
-    setIsLoading(true);
-    try {
-      await blockUser(cookies.token, userId);
-    } catch (err) {
-      console.log(err);
-    }
-    setIsLoading(false);
-  }
-
-  async function unblock(userId) {
-    setIsLoading(true);
-    try {
-      await unblockUser(cookies.token, userId);
-    } catch (err) {
-      console.log(err);
-    }
-    setIsLoading(false);
-  }
+  const { itemData, setIsLoading, block, unblock } = props;
 
   return (
     <div className="hover:bg-gray-200 shadow-md bg-white items-center w-full grid grid-cols-5 gap-3">

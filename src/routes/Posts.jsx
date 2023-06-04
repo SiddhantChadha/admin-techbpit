@@ -206,7 +206,7 @@ function getTimeFilteredData(data, filter) {
       console.log("valid");
     }
   });
-  if (filter.every((f) => !f  .checked)) return data;
+  if (filter.every((f) => !f.checked)) return data;
   return filteredData;
 }
 
