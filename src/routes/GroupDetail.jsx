@@ -11,6 +11,7 @@ import { useAuth } from "../hooks/auth";
 import { useParams } from "react-router";
 import { getGroupPosts } from "../api/PostsAPI";
 import PromoteUsersModal from "../components/PromoteUsersModal";
+import PostDetailModal from "../components/PostDetailModal";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,6 +30,8 @@ function GroupDetail() {
   const [refresh, setRefresh] = useState(false);
   const { cookies } = useAuth();
   const [userList, setUserList] = useState([]);
+  const [postModalOpen, setPostModalOpen] = useState(false);
+  const [postModalData, setPostModalData] = useState();
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,15 +41,19 @@ function GroupDetail() {
         console.log(data);
         setData(data);
         let list = [];
-        list = list.concat(data.moderators.map((item) => {
-          item.isModerator = true;
-          return item;
-        }));
+        list = list.concat(
+          data.moderators.map((item) => {
+            item.isModerator = true;
+            return item;
+          })
+        );
 
-        list = list.concat(data.usersJoined.map((item) => {
-          item.isModerator = false;
-          return item;
-        }));
+        list = list.concat(
+          data.usersJoined.map((item) => {
+            item.isModerator = false;
+            return item;
+          })
+        );
 
         setModalData(list);
         setIsLoading(false);
@@ -94,6 +101,12 @@ function GroupDetail() {
         data={modalData}
         groupId={params.groupdId}
         setRefresh={setRefresh}
+      />
+
+      <PostDetailModal
+        open={postModalOpen}
+        setOpen={setPostModalOpen}
+        itemData={postModalData}
       />
       <div className="w-2/3">
         <div className="flex items-center justify-center w-full">
@@ -221,7 +234,13 @@ function GroupDetail() {
                   {postData
                     .filter((obj) => obj.postType === "communityPost")
                     .map((obj) => (
-                      <CommunityPost itemData={obj} />
+                      <CommunityPost
+                        itemData={obj}
+                        onClick={() => {
+                          setPostModalData(obj);
+                          setPostModalOpen(true);
+                        }}
+                      />
                     ))}
                 </div>
               </Tab.Panel>
@@ -230,7 +249,13 @@ function GroupDetail() {
                   {postData
                     .filter((obj) => obj.postType === "eventPost")
                     .map((obj) => (
-                      <EventPost itemData={obj} />
+                      <EventPost
+                        itemData={obj}
+                        onClick={() => {
+                          setPostModalData(obj);
+                          setPostModalOpen(true);
+                        }}
+                      />
                     ))}
                 </div>
               </Tab.Panel>
@@ -239,7 +264,13 @@ function GroupDetail() {
                   {postData
                     .filter((obj) => obj.postType === "resourcePost")
                     .map((obj) => (
-                      <ResourcePost itemData={obj} />
+                      <ResourcePost
+                        itemData={obj}
+                        onClick={() => {
+                          setPostModalData(obj);
+                          setPostModalOpen(true);
+                        }}
+                      />
                     ))}
                 </div>
               </Tab.Panel>
