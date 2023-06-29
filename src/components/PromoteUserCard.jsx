@@ -17,7 +17,7 @@ function PromoteUserCard() {
         </div>
       </div>
       <div className="px-6 py-4 text-center">
-        {true ? (
+        {false ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-400">
             Particpant
           </span>
