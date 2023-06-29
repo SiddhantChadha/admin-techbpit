@@ -11,6 +11,7 @@ import { useAuth } from "../hooks/auth";
 import { useParams } from "react-router";
 import { getGroupPosts } from "../api/PostsAPI";
 import PromoteUsersModal from "../components/PromoteUsersModal";
+import PostDetailModal from "../components/PostDetailModal";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -24,16 +25,37 @@ function GroupDetail() {
   const [isPromoteOpen, setIsPromoteOpen] = useState(false);
   const [data, setData] = useState({});
   const [postData, setPostdata] = useState([]);
+  const [modalData, setModalData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const { cookies } = useAuth();
   const [userList, setUserList] = useState([]);
+  const [postModalOpen, setPostModalOpen] = useState(false);
+  const [postModalData, setPostModalData] = useState();
 
   useEffect(() => {
     setIsLoading(true);
     async function fetchData() {
       try {
         const data = await getGroupDetail(cookies.token, params.groupdId);
+        console.log(data);
         setData(data);
+        let list = [];
+        list = list.concat(
+          data.moderators.map((item) => {
+            item.isModerator = true;
+            return item;
+          })
+        );
+
+        list = list.concat(
+          data.usersJoined.map((item) => {
+            item.isModerator = false;
+            return item;
+          })
+        );
+
+        setModalData(list);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -50,7 +72,7 @@ function GroupDetail() {
     }
     fetchPostData();
     fetchData();
-  }, []);
+  }, [refresh]);
 
   function closeModal() {
     setIsOpen(false);
@@ -73,7 +95,19 @@ function GroupDetail() {
         userList={userList}
         title={title}
       />
-      <PromoteUsersModal isOpen={isPromoteOpen} setIsOpen={setIsPromoteOpen} />
+      <PromoteUsersModal
+        isOpen={isPromoteOpen}
+        setIsOpen={setIsPromoteOpen}
+        data={modalData}
+        groupId={params.groupdId}
+        setRefresh={setRefresh}
+      />
+
+      <PostDetailModal
+        open={postModalOpen}
+        setOpen={setPostModalOpen}
+        itemData={postModalData}
+      />
       <div className="w-2/3">
         <div className="flex items-center justify-center w-full">
           <img
@@ -118,7 +152,7 @@ function GroupDetail() {
                 <div>Participants</div>
               </div>
               <div
-                className="flex items-center bg-primaryBlue mx-4 rounded-lg px-2"
+                className="flex items-center bg-primaryBlue mx-4 rounded-lg px-2 cursor-pointer"
                 onClick={() => {
                   setIsPromoteOpen(true);
                 }}
@@ -200,7 +234,13 @@ function GroupDetail() {
                   {postData
                     .filter((obj) => obj.postType === "communityPost")
                     .map((obj) => (
-                      <CommunityPost itemData={obj} />
+                      <CommunityPost
+                        itemData={obj}
+                        onClick={() => {
+                          setPostModalData(obj);
+                          setPostModalOpen(true);
+                        }}
+                      />
                     ))}
                 </div>
               </Tab.Panel>
@@ -209,7 +249,13 @@ function GroupDetail() {
                   {postData
                     .filter((obj) => obj.postType === "eventPost")
                     .map((obj) => (
-                      <EventPost itemData={obj} />
+                      <EventPost
+                        itemData={obj}
+                        onClick={() => {
+                          setPostModalData(obj);
+                          setPostModalOpen(true);
+                        }}
+                      />
                     ))}
                 </div>
               </Tab.Panel>
@@ -218,7 +264,13 @@ function GroupDetail() {
                   {postData
                     .filter((obj) => obj.postType === "resourcePost")
                     .map((obj) => (
-                      <ResourcePost itemData={obj} />
+                      <ResourcePost
+                        itemData={obj}
+                        onClick={() => {
+                          setPostModalData(obj);
+                          setPostModalOpen(true);
+                        }}
+                      />
                     ))}
                 </div>
               </Tab.Panel>

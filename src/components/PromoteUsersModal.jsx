@@ -1,10 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import UserList from "../components/UserList";
-import GroupsJoinedList from "./GroupsJoinedList";
 import PromoteUsersList from "./PromoteUsersList";
 
-function PromoteUsersModal({ isOpen, setIsOpen }) {
+function PromoteUsersModal({ isOpen, setIsOpen, data, groupId, setRefresh }) {
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -57,7 +56,11 @@ function PromoteUsersModal({ isOpen, setIsOpen }) {
                   </div>
                 </div>
                 <div className="mt-2">
-                  <PromoteUsersList />
+                  <PromoteUsersList
+                    data={data}
+                    groupId={groupId}
+                    setRefresh={setRefresh}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>
