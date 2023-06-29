@@ -26,6 +26,20 @@ export const getGroupDetail = async (token,groupId)=>{
   return data;
 }
 
+export const toggleGroupModerator = async (token,groupId,userId)=>{
+  const result = await fetch(BASE_URL + '/group/access/toggle',{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization" : "Bearer " + token
+    },
+    body: JSON.stringify({groupId,userId}),
+})
+
+const data = await result.json();
+return data;
+}
+
 export const createGroup = async (token,groupName,image,description)=>{
   const result = await fetch(BASE_URL + '/group/create',{
               method: "POST",

@@ -1,23 +1,33 @@
 import React from "react";
+import { toggleGroupModerator } from "../api/GroupAPI";
+import { useAuth } from "../hooks/auth";
 
-function PromoteUserCard() {
+function PromoteUserCard({ item, groupId, setRefresh }) {
+  const { cookies } = useAuth();
+  async function changeAccess(userId) {
+    try {
+      await toggleGroupModerator(cookies.token, groupId, userId);
+      setRefresh((d) => !d);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="hover:bg-gray-200 shadow-md bg-white items-center w-full grid grid-cols-4 gap-3">
       <div className="flex flex-col px-6 py-4 font-normal text-gray-900 items-center">
         <div className="h-10 w-10">
           <img
             className="h-full w-full rounded-full object-cover object-center"
-            src={
-              "https://media.licdn.com/dms/image/C5103AQHExyLqyBIe8w/profile-displayphoto-shrink_400_400/0/1567182680271?e=1691625600&v=beta&t=ayZOWCEp2JHGCDiPlIZT7bci1o-T0xzBjKGkYMxkWlg"
-            }
+            src={item.image}
           />
         </div>
         <div className="text-sm flex flex-col items-center">
-          <div className="font-medium text-gray-700">{"Tushar Jain"}</div>
+          <div className="font-medium text-gray-700">{item.username}</div>
         </div>
       </div>
       <div className="px-6 py-4 text-center">
-        {true ? (
+        {!item.isModerator ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-400">
             Particpant
           </span>
@@ -30,14 +40,15 @@ function PromoteUserCard() {
       <div className="px-6 py-4 text-center">{"4th year"}</div>
       <div className="px-6 py-4">
         <div className="flex justify-center gap-2 flex-wrap">
-          {true ? (
+          {!item.isModerator ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6"
+              className="w-6 h-6 hover:text-green-500 cursor-pointer"
+              onClick={async () => await changeAccess(item._id)}
             >
               <path
                 stroke-linecap="round"
@@ -52,7 +63,8 @@ function PromoteUserCard() {
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-6 h-6"
+              className="w-6 h-6 hover:text-red-500 cursor-pointer"
+              onClick={async () => await changeAccess(item._id)}
             >
               <path
                 stroke-linecap="round"

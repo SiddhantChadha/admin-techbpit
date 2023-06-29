@@ -24,7 +24,9 @@ function GroupDetail() {
   const [isPromoteOpen, setIsPromoteOpen] = useState(false);
   const [data, setData] = useState({});
   const [postData, setPostdata] = useState([]);
+  const [modalData, setModalData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const { cookies } = useAuth();
   const [userList, setUserList] = useState([]);
 
@@ -33,7 +35,20 @@ function GroupDetail() {
     async function fetchData() {
       try {
         const data = await getGroupDetail(cookies.token, params.groupdId);
+        console.log(data);
         setData(data);
+        let list = [];
+        list = list.concat(data.moderators.map((item) => {
+          item.isModerator = true;
+          return item;
+        }));
+
+        list = list.concat(data.usersJoined.map((item) => {
+          item.isModerator = false;
+          return item;
+        }));
+
+        setModalData(list);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -50,7 +65,7 @@ function GroupDetail() {
     }
     fetchPostData();
     fetchData();
-  }, []);
+  }, [refresh]);
 
   function closeModal() {
     setIsOpen(false);
@@ -73,7 +88,13 @@ function GroupDetail() {
         userList={userList}
         title={title}
       />
-      <PromoteUsersModal isOpen={isPromoteOpen} setIsOpen={setIsPromoteOpen} />
+      <PromoteUsersModal
+        isOpen={isPromoteOpen}
+        setIsOpen={setIsPromoteOpen}
+        data={modalData}
+        groupId={params.groupdId}
+        setRefresh={setRefresh}
+      />
       <div className="w-2/3">
         <div className="flex items-center justify-center w-full">
           <img
@@ -118,7 +139,7 @@ function GroupDetail() {
                 <div>Participants</div>
               </div>
               <div
-                className="flex items-center bg-primaryBlue mx-4 rounded-lg px-2"
+                className="flex items-center bg-primaryBlue mx-4 rounded-lg px-2 cursor-pointer"
                 onClick={() => {
                   setIsPromoteOpen(true);
                 }}

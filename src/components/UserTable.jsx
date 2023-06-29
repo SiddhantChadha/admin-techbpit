@@ -1,8 +1,7 @@
 import React from "react";
 import UserCard from "../components/UserCard";
-import { useState } from "react";
-import { useEffect } from "react";
-import { blockUser, getAllUsers, unblockUser } from "../api/UserAPI";
+
+import { blockUser, unblockUser } from "../api/UserAPI";
 import { useAuth } from "../hooks/auth";
 
 function UserTable({ setIsLoading, fetchData, data }) {
