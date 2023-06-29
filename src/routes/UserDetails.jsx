@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { getUserById } from "../api/UserAPI";
 import { useAuth } from "../hooks/auth";
 import Loader from "../components/Loader";
+import { getYearOfStudy } from "../utils/AppUtils";
 
 function UserDetails() {
   const params = useParams();
@@ -38,7 +39,7 @@ function UserDetails() {
           <div className="flex flex-row items-center">
             <div className="font-semibold text-lg p-2">{data.username}</div>
             <div className="text-xs mx-2  font-semibold p-2 rounded-lg bg-grayEF">
-              {data.yearOfStudy}
+              {getYearOfStudy(data.yearOfStudy)}
             </div>
             <div className=" mx-2  font-semibold p-2 rounded-md bg-grayEF">
               <svg
@@ -116,7 +117,11 @@ function UserDetails() {
       ) : (
         <></>
       )}
-      <JoinedGroupModal isOpen={isOpen} setIsOpen={setIsOpen} data={data.groupsJoined}/>
+      <JoinedGroupModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        data={data.groupsJoined}
+      />
     </div>
   );
 }

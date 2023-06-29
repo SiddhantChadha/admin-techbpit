@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/auth";
+import { getYearOfStudy } from "../utils/AppUtils";
 
 function UserCard(props) {
   const { cookies } = useAuth();
@@ -35,7 +36,9 @@ function UserCard(props) {
           </span>
         )}
       </div>
-      <div className="px-6 py-4 text-center">{itemData.yearOfStudy}</div>
+      <div className="px-6 py-4 text-center">
+        {getYearOfStudy(itemData.yearOfStudy)}
+      </div>
       <div className="px-6 py-4">
         <div className="flex gap-2 flex-wrap">
           {itemData.skills.map((obj) => {
