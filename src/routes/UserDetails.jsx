@@ -103,15 +103,20 @@ function UserDetails() {
         <div className="mx-4 mb-4">
           <div className="m-2 font-bold">Social/Portfolio</div>
           <div className="flex flex-row flex-wrap ">
-            {data.socialLinks.map((socialLink) => (
-              <div className="flex flex-row items-center rounded-lg bg-grayEF m-2 p-2">
-                <img
-                  className="w-4 h-4 mr-2 shadow-lg"
-                  src={socialLink.platformImg}
-                />
-                <div className=" text-blue-500">{socialLink.platformLink}</div>
-              </div>
-            ))}
+            {data.socialLinks.map(
+              (socialLink) =>
+                socialLink.platformLink && (
+                  <div className="flex flex-row items-center rounded-lg bg-grayEF m-2 p-2">
+                    <img
+                      className="w-4 h-4 mr-2 shadow-lg"
+                      src={socialLink.platformImg}
+                    />
+                    <div className=" text-blue-500">
+                      {socialLink.platformLink}
+                    </div>
+                  </div>
+                )
+            )}
           </div>
         </div>
       ) : (
