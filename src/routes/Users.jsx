@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import UserTable from "../components/UserTable";
 import Loader from "../components/Loader";
 import { getAllUsers } from "../api/UserAPI";
-import { useAuth } from "../hooks/auth";
-
+import { useCookies } from "react-cookie";
 function Users() {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
-  const { cookies } = useAuth();
-
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
   async function fetchData() {
     try {
       const data = await getAllUsers(cookies.token);

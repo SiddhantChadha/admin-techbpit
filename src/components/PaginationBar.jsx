@@ -1,14 +1,15 @@
-import { act } from "@testing-library/react";
-import React, { useEffect, useState } from "react";
+import React, { memo } from "react";
+import { setupPages } from "../utils/AppUtils";
 
-export default function PaginationBar(props) {
-  const activePage = props.activePage;
-  const setActivePage = props.setActivePage;
-  const maxPage = props.maxPage;
-  const itemsPerPage = props.itemsPerPage;
-  const totalResults = props.totalResults;
-  const pageResults = props.pageResults;
-
+export default memo(function PaginationBar({
+  activePage,
+  setActivePage,
+  maxPage,
+  itemsPerPage,
+  totalResults,
+  pageResults,
+}) {
+  console.log("Bar reloaded");
   return (
     <div className="absolute bottom-0 flex items-center justify-end border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full h-3/12">
       <div className="flex flex-1 justify-between sm:hidden">
@@ -27,7 +28,7 @@ export default function PaginationBar(props) {
           onClick={() =>
             activePage < maxPage - 1
               ? setActivePage(activePage + 1)
-              : console.log("jyada charbi chgada h ")
+              : console.log()
           }
         >
           Next
@@ -106,47 +107,4 @@ export default function PaginationBar(props) {
       </div>
     </div>
   );
-}
-
-function setupPages(activePage, setActivePage, maxPage) {
-  let startPage;
-  if (activePage % 7 === 0) {
-    startPage = activePage;
-  } else {
-    startPage = activePage - (activePage % 7);
-  }
-  var items = [];
-  for (let index = startPage; index < startPage + 7; index++) {
-    if (index === activePage) {
-      items.push(
-        <span
-          aria-current="page"
-          className="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          {index + 1}
-        </span>
-      );
-    } else if (index > maxPage - 1) {
-      items.push(
-        <span
-          aria-current="page"
-          className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 bg-gray-100 focus:z-20 focus:outline-offset-0 md:inline-flex"
-          onClick={() => setActivePage(index)}
-        >
-          {index + 1}
-        </span>
-      );
-    } else {
-      items.push(
-        <span
-          aria-current="page"
-          className="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex"
-          onClick={() => setActivePage(index)}
-        >
-          {index + 1}
-        </span>
-      );
-    }
-  }
-  return items;
-}
+});

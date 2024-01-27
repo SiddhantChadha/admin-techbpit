@@ -1,9 +1,13 @@
 import React from "react";
 import { toggleGroupModerator } from "../api/GroupAPI";
-import { useAuth } from "../hooks/auth";
+import { useCookies } from "react-cookie";
 
 function PromoteUserCard({ item, groupId, setRefresh }) {
-  const { cookies } = useAuth();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
   async function changeAccess(userId) {
     try {
       await toggleGroupModerator(cookies.token, groupId, userId);

@@ -7,7 +7,7 @@ import DetailModal from "../components/DetailModal";
 import { useEffect } from "react";
 import Loader from "../components/Loader";
 import { getGroupDetail } from "../api/GroupAPI";
-import { useAuth } from "../hooks/auth";
+import { useCookies } from "react-cookie";
 import { useParams } from "react-router";
 import { getGroupPosts } from "../api/PostsAPI";
 import PromoteUsersModal from "../components/PromoteUsersModal";
@@ -28,7 +28,11 @@ function GroupDetail() {
   const [modalData, setModalData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const { cookies } = useAuth();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
   const [userList, setUserList] = useState([]);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [postModalData, setPostModalData] = useState();

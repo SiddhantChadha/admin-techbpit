@@ -3,19 +3,33 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import Loader from "../components/Loader";
-import { useAuth } from "../hooks/auth";
+import { useCookies } from "react-cookie";
+import login from "../api/LoginAPI";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, cookies } = useAuth();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await login(email, password);
+      const data = await login(email, password);
+      setCookies("token", data.access_token, {
+        expires: new Date(Date.now() + 86400000),
+      });
+      setCookies("name", data.username, {
+        expires: new Date(Date.now() + 86400000),
+      });
+      setCookies("image", data.image, {
+        expires: new Date(Date.now() + 86400000),
+      });
     } catch (err) {
       console.log(err);
     }

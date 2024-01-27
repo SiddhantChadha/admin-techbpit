@@ -1,9 +1,16 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useAuth } from "../hooks/auth";
+import { useCookies } from "react-cookie";
 
 function LogoutModal({ open, setOpen }) {
-  const { logout } = useAuth();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
+  const logout = () => {
+    ["token", "name", "image"].forEach((obj) => removeCookie(obj));
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>

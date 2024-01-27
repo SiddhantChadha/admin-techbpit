@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/auth";
 import { getYearOfStudy } from "../utils/AppUtils";
 
 function UserCard(props) {
-  const { cookies } = useAuth();
   const { itemData, setIsLoading, block, unblock } = props;
 
   return (

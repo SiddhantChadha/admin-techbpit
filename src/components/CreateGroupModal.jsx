@@ -3,9 +3,8 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Upload from "./Upload";
 import { createGroup } from "../api/GroupAPI";
-import { useAuth } from "../hooks/auth";
 import Loader from "./Loader";
-import { async } from "q";
+import { useCookies } from "react-cookie";
 
 function CreateGroupModal({ open, setOpen }) {
   const [cloudinaryImage, setCloudinaryImage] = useState(
@@ -16,7 +15,11 @@ function CreateGroupModal({ open, setOpen }) {
   const [description, setDescription] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { cookies } = useAuth();
+  const[cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
 
   async function fetchData() {
     setIsLoading(true);

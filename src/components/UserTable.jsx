@@ -2,10 +2,13 @@ import React from "react";
 import UserCard from "../components/UserCard";
 
 import { blockUser, unblockUser } from "../api/UserAPI";
-import { useAuth } from "../hooks/auth";
-
+import { useCookies } from "react-cookie";
 function UserTable({ setIsLoading, fetchData, data }) {
-  const { cookies } = useAuth();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
   async function block(userId) {
     setIsLoading(true);
     try {

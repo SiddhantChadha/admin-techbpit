@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import JoinedGroupModal from "../components/JoinedGroupModal";
 import { useParams } from "react-router";
 import { getUserById } from "../api/UserAPI";
-import { useAuth } from "../hooks/auth";
+import { useCookies } from "react-cookie";
 import Loader from "../components/Loader";
 import { getYearOfStudy } from "../utils/AppUtils";
 
 function UserDetails() {
   const params = useParams();
-  const { cookies } = useAuth();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
   const [data, setData] = useState({});
 
   let [isOpen, setIsOpen] = useState(false);

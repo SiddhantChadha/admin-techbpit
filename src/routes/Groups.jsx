@@ -3,14 +3,16 @@ import GroupCard from "../components/GroupCard";
 import CreateGroupModal from "../components/CreateGroupModal";
 import Loader from "../components/Loader";
 import { getGroups } from "../api/GroupAPI";
-import { useAuth } from "../hooks/auth";
-
+import { useCookies } from "react-cookie";
 function Groups() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { cookies } = useAuth();
-
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
   useEffect(() => {
     setIsLoading(true);
     async function fetchData() {

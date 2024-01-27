@@ -1,4 +1,3 @@
-import { async } from "q";
 import { BASE_URL } from "../config";
 
 export const getAllPosts = async (token) => {

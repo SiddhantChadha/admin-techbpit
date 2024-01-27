@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import CommunityPost from "../components/CommunityPost";
 import EventPost from "../components/EventPost";
 import ResourcePost from "../components/ResourcePost";
@@ -6,20 +6,15 @@ import PostsSearchBar from "../components/PostsSearchBar";
 import PaginationBar from "../components/PaginationBar";
 import Filters from "../components/Filters";
 import PostDetailModal from "../components/PostDetailModal";
-import { isSevenDaysAgo, isThirtyDaysAgo } from "../utils/DateTimeUtils";
 import { getAllPosts } from "../api/PostsAPI";
 import Loader from "../components/Loader";
-import { useAuth } from "../hooks/auth";
-
-const postFilters = [
-  { value: "Resource", checked: false, type: "resourcePost" },
-  { value: "Event", checked: false, type: "eventPost" },
-  { value: "Community", checked: false, type: "communityPost" },
-];
-const timeFilters = [
-  { value: "1 week ago", checked: false, type: 7 },
-  { value: "1 month ago", checked: false, type: 30 },
-];
+import { useCookies } from "react-cookie";
+import { postFilters, timeFilters } from "../utils/AppUtils";
+import { filterData } from "../utils/FilterHelper";
+import {
+  getItemsInPage,
+  getMaximumNumberOfPages,
+} from "../utils/PaginationHelper";
 
 function Posts() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,7 +27,11 @@ function Posts() {
   const [appliedTimeFilter, setAppliedTimeFilter] = useState(timeFilters);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { cookies } = useAuth();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "token",
+    "name",
+    "image",
+  ]);
   const [itemIndex, setItemIndex] = useState();
   async function fetchData() {
     try {
@@ -52,26 +51,39 @@ function Posts() {
     }
   }, []);
 
-  const onSearchClicked = (query) => {
-    setActivePage((activePage) => 0);
-    setSearchQuery((searchQuery) => query);
-    setFilteredData(
-      filterData(data, query, appliedPostFilter, appliedTimeFilter)
-    );
-  };
+  const onSearchClicked = useCallback(
+    (query) => {
+      setActivePage((activePage) => 0);
+      setSearchQuery((searchQuery) => query);
+      setFilteredData(
+        filterData(data, query, appliedPostFilter, appliedTimeFilter)
+      );
+    },
+    [data, appliedPostFilter, appliedTimeFilter]
+  );
 
-  const onPostFilterApplied = (newState) => {
-    console.log(newState);
-    setActivePage((activePage) => 0);
-    setAppliedPostFilter((appliedPostFilter) => newState);
-    setFilteredData(filterData(data, searchQuery, newState, appliedTimeFilter));
-  };
+  const onPostFilterApplied = useCallback(
+    (newState) => {
+      console.log(newState);
+      setActivePage((activePage) => 0);
+      setAppliedPostFilter((appliedPostFilter) => newState);
+      setFilteredData(
+        filterData(data, searchQuery, newState, appliedTimeFilter)
+      );
+    },
+    [data, searchQuery]
+  );
 
-  const onTimeFilterApplied = (newState) => {
-    setActivePage((activePage) => 0);
-    setAppliedTimeFilter((appliedTimeFilter) => newState);
-    setFilteredData(filterData(data, searchQuery, appliedPostFilter, newState));
-  };
+  const onTimeFilterApplied = useCallback(
+    (newState) => {
+      setActivePage((activePage) => 0);
+      setAppliedTimeFilter((appliedTimeFilter) => newState);
+      setFilteredData(
+        filterData(data, searchQuery, appliedPostFilter, newState)
+      );
+    },
+    [data, searchQuery]
+  );
 
   return isLoading ? (
     <Loader />
@@ -152,62 +164,6 @@ function getPostType(item, idx, setOpen, setItemIndex) {
         }}
       />
     );
-}
-
-function getItemsInPage(data, itemsPerPage, pageNumber) {
-  const startIndex = itemsPerPage * pageNumber;
-  const endIndex = startIndex + itemsPerPage;
-  const list = data.slice(startIndex, endIndex);
-  return list;
-}
-function getMaximumNumberOfPages(listSize, itemsPerPage) {
-  if (listSize % itemsPerPage === 0) {
-    return listSize / itemsPerPage;
-  } else {
-    return listSize / itemsPerPage + 1;
-  }
-}
-
-function filterData(data, query, filter, timeFilter) {
-  let filterData = getSearchedData(data, query);
-  console.log("search", filterData.length);
-  filterData = getPostFilteredData(filterData, filter);
-  filterData = getTimeFilteredData(filterData, timeFilter);
-  return filterData;
-}
-
-function getSearchedData(data, query) {
-  const filteredData = data.filter((o) => {
-    return o.groupId.groupName.toLowerCase().includes(query);
-  });
-  return filteredData;
-}
-
-function getPostFilteredData(data, filter) {
-  const filteredData = data.filter((itemData) =>
-    filter.some((f) => f.checked && f.type === itemData.postType)
-  );
-  if (filter.every((f) => !f.checked)) return data;
-  return filteredData;
-}
-
-function getTimeFilteredData(data, filter) {
-  var filteredData = data;
-  filter.map((f) => {
-    if (f.checked && f.type == 7) {
-      filteredData = data.filter((itemData) => {
-        isSevenDaysAgo(itemData.timestamp);
-      });
-    }
-    if (f.checked && f.type == 30) {
-      filteredData = data.filter((itemData) => {
-        isThirtyDaysAgo(itemData.timestamp);
-      });
-      console.log("valid");
-    }
-  });
-  if (filter.every((f) => !f.checked)) return data;
-  return filteredData;
 }
 
 export default Posts;

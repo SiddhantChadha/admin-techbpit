@@ -1,4 +1,9 @@
-export default function Filters({ appliedFilter, onFilterApplied, heading }) {
+import { memo } from "react";
+export default memo(function Filters({
+  appliedFilter,
+  onFilterApplied,
+  heading,
+}) {
   return (
     <div className="w-7/12">
       <span className="font-semibold">{heading}</span>
@@ -27,4 +32,4 @@ export default function Filters({ appliedFilter, onFilterApplied, heading }) {
       })}
     </div>
   );
-}
+});

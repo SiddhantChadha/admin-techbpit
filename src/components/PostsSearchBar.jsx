@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
-function PostsSearchBar(props) {
+const PostsSearchBar = memo(({ onSearchClicked }) => {
   const [val, setVal] = useState("");
-  const onSearchClicked = props.onSearchClicked;
+  console.log("search bar rendered");
   return (
     <div className="flex items-center mt-4 mb-4 w-6/12 justify-center ">
       <div className="flex space-x-1 w-full">
@@ -10,7 +10,12 @@ function PostsSearchBar(props) {
           type="text"
           className="block w-full px-4 py-2 text-primaryBlue-700 bg-white border rounded-full focus:border-primaryBlue focus:ring-primaryBlue focus:outline-none focus:ring focus:ring-opacity-40"
           placeholder="Search..."
-          onChange={(event) => setVal(event.target.value)}
+          onChange={(event) => {
+            setVal(event.target.value);
+            if (!event.target.value.trim()) {
+              onSearchClicked("");
+            }
+          }}
           value={val}
         />
         <button
@@ -35,6 +40,6 @@ function PostsSearchBar(props) {
       </div>
     </div>
   );
-}
+});
 
 export default PostsSearchBar;
