@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import { getAllUsers } from "../api/UserAPI";
 import { useCookies } from "react-cookie";
 function Users() {
+  console.log("Users component rendered");
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
   const [cookies, setCookies, removeCookie] = useCookies([
